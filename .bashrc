@@ -17,8 +17,6 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 # tooster
 # aliases and utilities
 
-alias wp="cd ~/workspace"
-alias notes="code ~/notes.md"
 
 # tab completion to attach to tmux session via `t [name]`
 function _ttr_tmux_session_complete {
@@ -36,6 +34,10 @@ function _ttr_new_tmux_session {
 
 alias t=_ttr_new_tmux_session
 complete -F _ttr_tmux_session_complete t
+
+
+alias wp="cd ~/workspace"
+alias notes="code ~/notes.md"
 alias lenny='echo -n "( ͡° ͜ʖ ͡°)" | xclip -sel c'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 
