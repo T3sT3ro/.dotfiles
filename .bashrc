@@ -32,13 +32,19 @@ function _ttr_new_tmux_session {
     fi;
 }
 
-alias t=_ttr_new_tmux_session
+alias ta='tmux attach -t'
+alias ts='tmux switch -t'
+alias tn=_ttr_new_tmux_session
+alias t='tmux attach || _ttr_new_tmux_session'
+alias tl='tmux ls'
+
 complete -F _ttr_tmux_session_complete t
 
-
+alias f='formatter'
 alias wp="cd ~/workspace"
 alias notes="code ~/notes.md"
 alias lenny='echo -n "( ͡° ͜ʖ ͡°)" | xclip -sel c'
+alias shrug='echo -n "¯\_(ツ)_/¯" | xclip -sel c'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 
 #
@@ -59,6 +65,9 @@ eval "$(thefuck --alias)"
 export CLASSPATH=".:/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH"
 alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
 alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'
+
+#setup NODE
+export NODE_PATH="$NODE_PATH:/usr/local/lib/node_modules"
 
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
