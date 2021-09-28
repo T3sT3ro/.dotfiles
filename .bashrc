@@ -46,7 +46,7 @@ alias notes="code ~/notes.md"
 alias lenny='echo -n "( ͡° ͜ʖ ͡°)" | xclip -sel c'
 alias shrug='echo -n "¯\_(ツ)_/¯" | xclip -sel c'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
-
+alias o='xdg-open'
 #
 # =============================================
 #
@@ -67,8 +67,8 @@ alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.8-complete.jar:$CLASSPAT
 alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'
 
 #setup NODE
-export NODE_PATH="$NODE_PATH:/usr/local/lib/node_modules"
-
+export N_PREFIX="$HOME/.n"
+export PATH=$N_PREFIX/bin:$PATH
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/tooster/.sdkman"
