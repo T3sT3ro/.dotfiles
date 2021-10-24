@@ -1,12 +1,10 @@
 # PROMPT settings
 
-REMOTE=$(who am i | awk -F' ' '{printf $5}')
-[[ $REMOTE =~ \([-a-zA-Z0-9\.]+\)$ ]] && REMOTE=true || REMOTE=false
-
 function __ttr_prompt {
     # store exit code
     exit=$?
     # After each command, save and reload history
+    # this helps in preserving history across panes
     history -a; history -c; history -r;
     #
     # always start prompt on new line and append indicator if line didn't end with newline
@@ -26,6 +24,7 @@ function __ttr_prompt {
     # last command exit code green if 0 and red otherwise
     local RET_COLOR=$([[ $exit -eq 0 ]] && echo "32" || echo "31")
     local RET_FORMAT=$(printf "%-3s" $exit)
+    local INV="\\[[7m\\]"
     local INV_OFF="\\[[27m\\]" # deletes reverse
     local DECOR="${INV_OFF}-"
     # legacy terminals look bad with the slant
@@ -35,19 +34,21 @@ function __ttr_prompt {
     ! [[ $TERM =~ ^(.*term|rxvt)$ ]] && DECOR="${INV_OFF}◣" && RET_COLOR="7;$RET_COLOR" && RET_FORMAT=" $RET_FORMAT"
     # triangle symbol doesn't occupy full height in JetBrains-Jedi and vscode terminal looking fugly
     if [[ $TERM_PROGRAM =~ vscode ]] || [[ $TERMINAL_EMULATOR =~ .*JetBrains.* ]]; then DECOR=" ${INV_OFF}"; fi
-    local USR_COLOR=$([[ $UID -eq 0 ]] && echo 31 || echo 32)
-    local HOST_COLOR=$( [[ REMOTE ]] && echo 33 || echo 33 )
+    local USR_COLOR=$( [[ $UID -eq 0 ]] && echo 31 || echo 32 )
+    local HOST_COLOR=$( $REMOTE && echo 33 || echo 32 )
     local CHROOT=${debian_chroot:+\[[0;3;34m\]($debian_chroot)\[[23m\]}
     
     local RET="\\[[0;1;${RET_COLOR}m\\]${RET_FORMAT}${DECOR}"
-    local USR="\\[[0;1;${USR_COLOR}m\\]\\u@\\[${HOST_COLOR}m\\]\\h"
+    local USR="\\[[0;1;${USR_COLOR}m\\]\\u\\[[${HOST_COLOR}m\\]@\\h"
     local PWD="\\[[0;1;34m\\]\\w\\[[0m\\]"
     local SHEBANG="\\[[0m\\]\\$ "
     local GIT_FORMAT=" \\[[36m\\](%s\\[[36m\\])"
-    if [[ $(tput cols) -le 90 ]]; then
-        PS1="$RET [\\t] $CHROOT$USR\\[[0m\\] $(__git_ps1 $GIT_FORMAT)\\n\\[\\e[0;1;7m!\\!\\e[27m\\] $PWD\\n$SHEBANG"
+    # how __git_ps1 works can be found at /usr/lib/git-core/git-sh-prompt
+    # basically first arg is prefix, second is suffix third is format
+    if [[ $(tput cols) -le 90 ]]; then # make short prompts multiline
+        __git_ps1 "$RET [\\t] $CHROOT$USR\\[[0m\\]\\n\\[[0;1;7m!\\![0m\\] $PWD " "\\n$SHEBANG" $GIT_FORMAT
     else
-        PS1="$RET $CHROOT$USR\\[[0m\\]:$PWD $(__git_ps1 $GIT_FORMAT)$SHEBANG" 
+        __git_ps1 "$RET $CHROOT$USR\\[[0m\\]:$PWD " "$SHEBANG" $GIT_FORMAT
     fi
     return $exit
 }

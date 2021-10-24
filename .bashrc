@@ -10,13 +10,62 @@
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
+# tooster
+# =============================================
+# aliases and utilities
+
 # alias to manage dotfiles.
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
-# =============================================
-# tooster
-# aliases and utilities
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    # alias dir='dir --color=auto'
+    # alias vdir='vdir --color=auto'
 
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -F -1'
+
+# Add an "alert" alias for long running commands.  Use like so:
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=4000
+HISTFILESIZE=9000
+
+# avoid duplicates..
+export HISTCONTROL=ignoredups:erasedups
+
+# append history entries..
+shopt -s histappend
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+shopt -s globstar
+
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+
+# alert will send a desktop notification when command ends.
+# input will be used to set notification text
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# tldr completion
+[ -f ~/.tldr-completion.bash ] && source ~/.tldr-completion.bash
 
 # tab completion to attach to tmux session via `t [name]`
 function _ttr_tmux_session_complete {
@@ -29,7 +78,7 @@ function _ttr_new_tmux_session {
         tmux new-session -s $(codename -s '_')
     else
         tmux attach-session -t $1
-    fi;
+    fi
 }
 
 function webm2gif() {
@@ -52,11 +101,43 @@ alias shrug='echo -n "¯\_(ツ)_/¯" | xclip -sel c'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 alias o='xdg-open'
 
-#
+# MAN sizing of maxwidth 120 for terminals bigger than 120
+better_man() {
+    if (( $(tput cols) <= 130 )); then
+        /usr/bin/man $@ 
+    else
+        MANWIDTH=120 /usr/bin/man $@
+    fi
+}
+
+alias man=better_man #'if (( $(tput cols) <= 130 )); then MANWIDTH=$( (( $(tput cols) <= 130 )) && echo $(tput cols) || echo 120) man'
+# --------------------------------
+
+
+# LESS coloring. Will guess based on content if can't find lexer
+export LESSOPEN="| pygmentize -gO style=monokai %s" 
+export LESS=' -R --mouse --wheel-lines=3' 
+
+# MAN COLORING
+export LESS_TERMCAP_mb=$'\e[1;5;32m' # start blink
+export LESS_TERMCAP_md=$'\e[1;32m' # start bold
+export LESS_TERMCAP_me=$'\e[0m'    # turn off bold, blink and underline
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;7;33m' # standout aka search ???
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
+
+# sourcing and path modifications
 # =============================================
 #
 
+# custom prompt by Tooster
 . ~/.prompt.sh
+
+# autojump
+if [ -d /usr/share/autojump ]; then
+    . /usr/share/autojump/autojump.sh
+fi
 
 # setup ruby gems PATH
 if command -v ruby >/dev/null && command -v gem >/dev/null; then
@@ -67,7 +148,7 @@ fi
 #setup TheFuck
 if ( command -v thefuck >/dev/null ); then
     eval "$(thefuck --alias)"
-fi;
+fi
 
 # setup ANTLR
 export CLASSPATH=".:/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH"
@@ -81,7 +162,7 @@ export PATH=$N_PREFIX/bin:$PATH
 # RUST - cargo
 if [ -d "$HOME/.cargo/" ]; then
     . "$HOME/.cargo/env"
-fi;
+fi
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/tooster/.sdkman"
