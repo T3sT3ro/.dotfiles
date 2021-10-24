@@ -1,4 +1,8 @@
 # PROMPT settings
+
+REMOTE=$(who am i | awk -F' ' '{printf $5}')
+[[ $REMOTE =~ \([-a-zA-Z0-9\.]+\)$ ]] && REMOTE=true || REMOTE=false
+
 function __ttr_prompt {
     # store exit code
     exit=$?
@@ -32,10 +36,11 @@ function __ttr_prompt {
     # triangle symbol doesn't occupy full height in JetBrains-Jedi and vscode terminal looking fugly
     if [[ $TERM_PROGRAM =~ vscode ]] || [[ $TERMINAL_EMULATOR =~ .*JetBrains.* ]]; then DECOR=" ${INV_OFF}"; fi
     local USR_COLOR=$([[ $UID -eq 0 ]] && echo 31 || echo 32)
-    local CHROOT=${debian_chroot:+\[[0;3;33m\]($debian_chroot)\[[23m\]}
+    local HOST_COLOR=$( [[ REMOTE ]] && echo 33 || echo 33 )
+    local CHROOT=${debian_chroot:+\[[0;3;34m\]($debian_chroot)\[[23m\]}
     
     local RET="\\[[0;1;${RET_COLOR}m\\]${RET_FORMAT}${DECOR}"
-    local USR="\\[[0;1;${USR_COLOR}m\\]\\u@\\h"
+    local USR="\\[[0;1;${USR_COLOR}m\\]\\u@\\[${HOST_COLOR}m\\]\\h"
     local PWD="\\[[0;1;34m\\]\\w\\[[0m\\]"
     local SHEBANG="\\[[0m\\]\\$ "
     local GIT_FORMAT=" \\[[36m\\](%s\\[[36m\\])"

@@ -32,6 +32,10 @@ function _ttr_new_tmux_session {
     fi;
 }
 
+function webm2gif() {
+    ffmpeg -i "$1" "${1%.webm}.gif"
+}
+
 alias ta='tmux attach -t'
 alias ts='tmux switch -t'
 alias tn=_ttr_new_tmux_session
@@ -47,19 +51,23 @@ alias lenny='echo -n "( ͡° ͜ʖ ͡°)" | xclip -sel c'
 alias shrug='echo -n "¯\_(ツ)_/¯" | xclip -sel c'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 alias o='xdg-open'
+
 #
 # =============================================
 #
 
+. ~/.prompt.sh
 
 # setup ruby gems PATH
-if which ruby >/dev/null && which gem >/dev/null; then
+if command -v ruby >/dev/null && command -v gem >/dev/null; then
     RUBYPATH="$(ruby -r rubygems -e 'puts Gem.user_dir')"
     export PATH="$RUBYPATH/bin:$PATH"
 fi
 
 #setup TheFuck
-eval "$(thefuck --alias)"
+if ( command -v thefuck >/dev/null ); then
+    eval "$(thefuck --alias)"
+fi;
 
 # setup ANTLR
 export CLASSPATH=".:/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH"
@@ -70,7 +78,12 @@ alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH"
 export N_PREFIX="$HOME/.n"
 export PATH=$N_PREFIX/bin:$PATH
 
+# RUST - cargo
+if [ -d "$HOME/.cargo/" ]; then
+    . "$HOME/.cargo/env"
+fi;
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/tooster/.sdkman"
 [[ -s "/home/tooster/.sdkman/bin/sdkman-init.sh" ]] && source "/home/tooster/.sdkman/bin/sdkman-init.sh"
-. "$HOME/.cargo/env"
+
