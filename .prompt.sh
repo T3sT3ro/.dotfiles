@@ -1,5 +1,7 @@
 # PROMPT settings
 
+source /usr/lib/git-core/git-sh-prompt
+
 function __ttr_prompt {
     # store exit code
     exit=$?
