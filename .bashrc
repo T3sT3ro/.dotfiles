@@ -21,7 +21,9 @@ REMOTE=$(who am i | awk -F' ' '{printf $5}')
 export REMOTE
 
 # alias to manage dotfiles.
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+function dotfiles {
+   /usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME $@
+}
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
