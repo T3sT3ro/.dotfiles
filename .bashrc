@@ -14,6 +14,12 @@
 # =============================================
 # aliases and utilities
 
+# this tells anyone logged into machine that he is logged via SSH
+# maybe not the best way (SSH_... could be better), but works
+REMOTE=$(who am i | awk -F' ' '{printf $5}')
+[[ $REMOTE =~ \([-a-zA-Z0-9\.]+\)$ ]] && REMOTE=true || REMOTE=false
+export REMOTE
+
 # alias to manage dotfiles.
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
