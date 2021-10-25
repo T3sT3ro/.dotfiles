@@ -1,6 +1,10 @@
 # PROMPT settings
 
-source /usr/lib/git-core/git-sh-prompt
+# debians
+[ -f /usr/lib/git-core/git-sh-prompt ] && source /usr/lib/git-core/git-sh-prompt
+# centos, fedora (yum)
+[ -f /usr/share/git-core/contrib/completion/git-prompt.sh ] && source /usr/share/git-core/contrib/completion/git-prompt.sh
+
 
 function __ttr_prompt {
     # store exit code
