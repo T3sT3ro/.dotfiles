@@ -1,5 +1,7 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =8
+let g:netrw_dirhistcnt =0
+let g:netrw_dirhist_0='/home/300791/.tmux'
+let g:netrw_dirhist_9='/home/300791/.vim'
 let g:netrw_dirhist_8='/home/tooster/.tmux/plugins/tmux-sensible'
 let g:netrw_dirhist_7='/home/tooster/.tmux/plugins'
 let g:netrw_dirhist_6='/home/tooster/.tmux'
@@ -8,5 +10,3 @@ let g:netrw_dirhist_4='/usr/share/vim/vim81'
 let g:netrw_dirhist_3='/home/tooster'
 let g:netrw_dirhist_2='/home/tooster/.vim'
 let g:netrw_dirhist_1='/home/tooster'
-let g:netrw_dirhist_0='/etc/vim'
-let g:netrw_dirhist_9='/home/tooster'

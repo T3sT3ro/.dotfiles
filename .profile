@@ -28,4 +28,6 @@ fi
 # tooster
 # -----------------------------------------------------------------
 
-[ -d "$HOME/.cargo/" ] && source "$HOME/.cargo/env"
+if [ -d "$HOME/.cargo/" ] ; then
+    . "$HOME/.cargo/env"
+fi

@@ -5,19 +5,37 @@
 # centos, fedora (yum)
 [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ] && source /usr/share/git-core/contrib/completion/git-prompt.sh
 
+###
+# Get the current terminal column value.
+#
+# From https://stackoverflow.com/a/2575525/549363.
+###
+__ttr_get_terminal_column() {
+  exec < /dev/tty
+  local oldstty=$(stty -g)
+  stty raw -echo min 0
+  echo -en "\033[6n" > /dev/tty
+  local pos
+  IFS=';' read -r -d R -a pos
+  stty $oldstty
+  echo "$((${pos[1]} - 1))"
+}
 
 function __ttr_prompt {
     # store exit code
-    exit=$?
+    local exit=$?
     # After each command, save and reload history
     # this helps in preserving history across panes
     history -a; history -c; history -r;
     #
     # always start prompt on new line and append indicator if line didn't end with newline
-    local curpos
-    echo -en "[6n"
-    IFS=";" read -sdR -a curpos
-    (( curpos[1]!=1 )) && echo -e '[1;7;33m ⌥  [0m'
+    #local curpos
+    #echo -en "[6n"
+    #IFS=";" read -sdR -a curpos
+    #(( curpos[1]!=1 )) && echo -e '[1;7;33m ⌥  [0m'
+    if [ "$(__ttr_get_terminal_column)" != 0 ]; then
+        echo -e '[1;7;33m ⌥  [0m'
+    fi
 
     #
     # GIT_PS1_DESCRIBE_STYLE
@@ -41,7 +59,7 @@ function __ttr_prompt {
     # triangle symbol doesn't occupy full height in JetBrains-Jedi and vscode terminal looking fugly
     if [[ $TERM_PROGRAM =~ vscode ]] || [[ $TERMINAL_EMULATOR =~ .*JetBrains.* ]]; then DECOR=" ${INV_OFF}"; fi
     local USR_COLOR=$( [[ $UID -eq 0 ]] && echo 31 || echo 32 )
-    local HOST_COLOR=$( $REMOTE && echo 33 || echo 32 )
+    local HOST_COLOR=$( [[ $SESSION_TYPE =~ remote/ssh ]] && echo 33 || echo 32 )
     local CHROOT=${debian_chroot:+\[[0;3;34m\]($debian_chroot)\[[23m\]}
     
     local RET="\\[[0;1;${RET_COLOR}m\\]${RET_FORMAT}${DECOR}"
@@ -56,11 +74,7 @@ function __ttr_prompt {
     else
         __git_ps1 "$RET $CHROOT$USR\\[[0m\\]:$PWD " "$SHEBANG" $GIT_FORMAT
     fi
-    return $exit
 }
 
-PROMPT_COMMAND="__ttr_prompt"
 # IF SOMETHING IS APPENDED AT START, THEN $? WON'T WORK
-export PROMPT_COMMAND="$PROMPT_COMMAND"
-
-
+export PROMPT_COMMAND=__ttr_prompt

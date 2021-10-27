@@ -15,10 +15,17 @@
 # aliases and utilities
 
 # this tells anyone logged into machine that he is logged via SSH
-# maybe not the best way (SSH_... could be better), but works
-REMOTE=$(who am i | awk -F' ' '{printf $5}')
-[[ $REMOTE =~ \([-a-zA-Z0-9\.]+\)$ ]] && REMOTE=true || REMOTE=false
-export REMOTE
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+  SESSION_TYPE=remote/ssh
+# many other tests omitted
+else
+  case $(ps -o comm= -p $PPID) in
+    sshd|*/sshd) SESSION_TYPE=remote/ssh;;
+  esac
+fi
+export SESSION_TYPE
+#REMOTE=$(who am i | awk -F' ' '{printf $5}')
+#[[ $REMOTE =~ \([-a-zA-Z0-9\.]+\)$ ]] && REMOTE=true || REMOTE=false
 
 # alias to manage dotfiles.
 function dotfiles {
@@ -174,5 +181,6 @@ fi
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/tooster/.sdkman"
-[[ -s "/home/tooster/.sdkman/bin/sdkman-init.sh" ]] && source "/home/tooster/.sdkman/bin/sdkman-init.sh"
-
+if [[ -s "/home/tooster/.sdkman/bin/sdkman-init.sh" ]]; then
+    source "/home/tooster/.sdkman/bin/sdkman-init.sh"
+fi
