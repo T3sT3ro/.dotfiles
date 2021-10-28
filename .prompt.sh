@@ -21,6 +21,12 @@ __ttr_get_terminal_column() {
   echo "$((${pos[1]} - 1))"
 }
 
+
+PROMPT_MULTILINE=90
+PROMPT_HISTNUM=true
+PROMPT_MULTILINE_DIRTRIM=
+PROMPT_INLINE_DIRTRIM=
+
 if [ -f $HOME/.promptrc ];then source $HOME/.promptrc; fi;
 
 function __ttr_prompt {
@@ -72,7 +78,6 @@ function __ttr_prompt {
     local PWD_COLOR='\[[0;1;34m\]'
     local SHEBANG='\[[0m\]\$'
     local GIT_FORMAT='\[[36m\](%s\[[36m\])'
-    local HISTFMT="\\[[0;2;7;$RET_COLOR;107m!\\!"
 
     # TODO: fix CHROOT    
 
@@ -80,10 +85,12 @@ function __ttr_prompt {
     # basically first arg is prefix, second is suffix third is format
     if [[ $PROMPT_MULTILINE = always || $(tput cols) -le $PROMPT_MULTILINE ]]; then # make short prompts multiline
         PROMPT_DIRTRIM=$PROMPT_MULTILINE_DIRTRIM
+        local HISTFMT="\\[[0;2;7;$RET_COLOR;107m\\]     \r!\!\r$(tput cuf 5)"
         __git_ps1 "$RET [\\t] ${CHROOT}${USR}${RST}:${PWD_COLOR}\\w$RST\\n${HISTFMT}${RST}" " $SHEBANG " " $GIT_FORMAT"
     else
         PROMPT_DIRTRIM=$PROMPT_INLINE_DIRTRIM
-        if [[ $PROMPT_HISTNUM == true ]]; then RET="${HISTFMT} ${RST}${RET}"; fi
+        local HISTFMT="\\[[0;2;7;$RET_COLOR;107m\\]      \r!\!\r$(tput cuf 6)"
+        if [[ $PROMPT_HISTNUM == true ]]; then RET="${HISTFMT}${RST}${RET}"; fi
         __git_ps1 "$RET ${CHROOT}${USR}${RST}:$PWD_COLOR\\w$RST" " $SHEBANG " " $GIT_FORMAT"
     fi
 }
