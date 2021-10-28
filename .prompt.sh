@@ -21,9 +21,13 @@ __ttr_get_terminal_column() {
   echo "$((${pos[1]} - 1))"
 }
 
+if [ -f $HOME/.promptrc ];then source $HOME/.promptrc; fi;
+
 function __ttr_prompt {
     # store exit code
     local exit=$?
+    local success
+    [[ $exit -eq 0 ]] && success=true || success=false
     # After each command, save and reload history
     # this helps in preserving history across panes
     history -a; history -c; history -r;
@@ -46,6 +50,7 @@ function __ttr_prompt {
     GIT_PS1_SHOWUPSTREAM='auto'
     
     # last command exit code green if 0 and red otherwise
+    local RST="\\[[0m\\]"
     local RET_COLOR=$([[ $exit -eq 0 ]] && echo "32" || echo "31")
     local RET_FORMAT=$(printf "%-3s" $exit)
     local INV="\\[[7m\\]"
@@ -64,15 +69,22 @@ function __ttr_prompt {
     
     local RET="\\[[0;1;${RET_COLOR}m\\]${RET_FORMAT}${DECOR}"
     local USR="\\[[0;1;${USR_COLOR}m\\]\\u\\[[${HOST_COLOR}m\\]@\\h"
-    local PWD="\\[[0;1;34m\\]\\w\\[[0m\\]"
-    local SHEBANG="\\[[0m\\]\\$ "
-    local GIT_FORMAT=" \\[[36m\\](%s\\[[36m\\])"
+    local PWD_COLOR='\[[0;1;34m\]'
+    local SHEBANG='\[[0m\]\$'
+    local GIT_FORMAT='\[[36m\](%s\[[36m\])'
+    local HISTFMT="\\[[0;2;7;$RET_COLOR;107m!\\!"
+
+    # TODO: fix CHROOT    
+
     # how __git_ps1 works can be found at /usr/lib/git-core/git-sh-prompt
     # basically first arg is prefix, second is suffix third is format
-    if [[ $(tput cols) -le 90 ]]; then # make short prompts multiline
-        __git_ps1 "$RET [\\t] $CHROOT$USR\\[[0m\\]\\n\\[[0;1;7m!\\![0m\\] $PWD " "\\n$SHEBANG" $GIT_FORMAT
+    if [[ $PROMPT_MULTILINE = always || $(tput cols) -le $PROMPT_MULTILINE ]]; then # make short prompts multiline
+        PROMPT_DIRTRIM=$PROMPT_MULTILINE_DIRTRIM
+        __git_ps1 "$RET [\\t] ${CHROOT}${USR}${RST}:${PWD_COLOR}\\w$RST\\n${HISTFMT}${RST}" " $SHEBANG " " $GIT_FORMAT"
     else
-        __git_ps1 "$RET $CHROOT$USR\\[[0m\\]:$PWD " "$SHEBANG" $GIT_FORMAT
+        PROMPT_DIRTRIM=$PROMPT_INLINE_DIRTRIM
+        if [[ $PROMPT_HISTNUM == true ]]; then RET="${HISTFMT} ${RST}${RET}"; fi
+        __git_ps1 "$RET ${CHROOT}${USR}${RST}:$PWD_COLOR\\w$RST" " $SHEBANG " " $GIT_FORMAT"
     fi
 }
 

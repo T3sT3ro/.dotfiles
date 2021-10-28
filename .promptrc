@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# control mode of prompt - inline or multiline
+#   <columns>   automatic wrap if terminal has no more than that many columns
+#   always      always multiline
+PROMPT_MULTILINE=90
+
+# always show hist numbers next to commands
+PROMPT_HISTNUM=true
+
+# how many paths to show in multiline/inline. Elipsis (...) will be sown
+# leave blank to preserve defaults
+PROMPT_MULTILINE_DIRTRIM=3
+PROMPT_INLINE_DIRTRIM=
