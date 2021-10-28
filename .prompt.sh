@@ -62,13 +62,25 @@ function __ttr_prompt {
     local INV="\\[[7m\\]"
     local INV_OFF="\\[[27m\\]" # deletes reverse
     local DECOR="${INV_OFF}-"
+    local HIST_COLOR="\\[[0;2;7;$RET_COLOR;107m\\]"
+
     # legacy terminals look bad with the slant
     # for other terminals: ◣
     # for "special need terminals": -
     # for those, where above triangle is not full height: space pad on the right to ecode
-    ! [[ $TERM =~ ^(.*term|rxvt)$ ]] && DECOR="${INV_OFF}◣" && RET_COLOR="7;$RET_COLOR" && RET_FORMAT=" $RET_FORMAT"
+    if ! [[ $TERM =~ ^(.*term|rxvt)$ ]]; then
+        DECOR="${INV_OFF}◣"
+        RET_COLOR="7;$RET_COLOR"
+        RET_FORMAT=" $RET_FORMAT"
+    else
+        RET_FORMAT="$RET_FORMAT   "
+        HIST_COLOR="\\[[0;7;39m\\]"
+    fi
     # triangle symbol doesn't occupy full height in JetBrains-Jedi and vscode terminal looking fugly
-    if [[ $TERM_PROGRAM =~ vscode ]] || [[ $TERMINAL_EMULATOR =~ .*JetBrains.* ]]; then DECOR=" ${INV_OFF}"; fi
+    if [[ $TERM_PROGRAM =~ vscode ]] || [[ $TERMINAL_EMULATOR =~ .*JetBrains.* ]]; then 
+        DECOR=" ${INV_OFF}"; 
+        HIST_COLOR="\\[[0;7;39m\\]"
+    fi
     local USR_COLOR=$( [[ $UID -eq 0 ]] && echo 31 || echo 32 )
     local HOST_COLOR=$( [[ $SESSION_TYPE =~ remote/ssh ]] && echo 33 || echo 32 )
     local CHROOT=${debian_chroot:+\[[0;3;34m\]($debian_chroot)\[[23m\]}
@@ -78,18 +90,18 @@ function __ttr_prompt {
     local PWD_COLOR='\[[0;1;34m\]'
     local SHEBANG='\[[0m\]\$'
     local GIT_FORMAT='\[[36m\](%s\[[36m\])'
-
     # TODO: fix CHROOT    
 
     # how __git_ps1 works can be found at /usr/lib/git-core/git-sh-prompt
     # basically first arg is prefix, second is suffix third is format
     if [[ $PROMPT_MULTILINE = always || $(tput cols) -le $PROMPT_MULTILINE ]]; then # make short prompts multiline
         PROMPT_DIRTRIM=$PROMPT_MULTILINE_DIRTRIM
-        local HISTFMT="\\[[0;2;7;$RET_COLOR;107m\\]     \r!\!\r$(tput cuf 5)"
+        # HISTFMT prints first a colored box of proper width, then histnum from start, then continues after box
+        local HISTFMT="$HIST_COLOR     \\[\r!\!\r$(tput cuf 5)\\]"
         __git_ps1 "$RET [\\t] ${CHROOT}${USR}${RST}:${PWD_COLOR}\\w$RST\\n${HISTFMT}${RST}" " $SHEBANG " " $GIT_FORMAT"
     else
         PROMPT_DIRTRIM=$PROMPT_INLINE_DIRTRIM
-        local HISTFMT="\\[[0;2;7;$RET_COLOR;107m\\]      \r!\!\r$(tput cuf 6)"
+        local HISTFMT="$HIST_COLOR      \\[\r!\\!\r$(tput cuf 6)\\]"
         if [[ $PROMPT_HISTNUM == true ]]; then RET="${HISTFMT}${RST}${RET}"; fi
         __git_ps1 "$RET ${CHROOT}${USR}${RST}:$PWD_COLOR\\w$RST" " $SHEBANG " " $GIT_FORMAT"
     fi

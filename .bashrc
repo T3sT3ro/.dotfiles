@@ -119,6 +119,7 @@ alias lenny='echo -n "( ͡° ͜ʖ ͡°)" | xclip -sel c'
 alias shrug='echo -n "¯\_(ツ)_/¯" | xclip -sel c'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 alias o='xdg-open'
+alias copy='xclip -sel clip'
 
 # MAN sizing of maxwidth 120 for terminals bigger than 120
 better_man() {
