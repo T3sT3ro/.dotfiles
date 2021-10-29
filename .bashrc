@@ -24,6 +24,17 @@ else
   esac
 fi
 export SESSION_TYPE
+
+# remap prefix-r to reload tmux conf
+if [[ $TMUX && $SESSION_TYPE = remote/ssh ]]; then 
+    tmux unbind C-a #if it persisted somehow
+    tmux set -g prefix C-b
+    tmux bind C-b send-prefix
+    tmux set status-style bg=blue,fg=white
+    tmux set pane-active-border-style fg=yellow,bg=blue
+    tmux refresh-client -S
+fi
+
 #REMOTE=$(who am i | awk -F' ' '{printf $5}')
 #[[ $REMOTE =~ \([-a-zA-Z0-9\.]+\)$ ]] && REMOTE=true || REMOTE=false
 
