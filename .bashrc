@@ -172,10 +172,13 @@ if [ -d /usr/share/autojump ]; then
     . /usr/share/autojump/autojump.sh
 fi
 
+# Load rbenv automatically by appending
+# the following to ~/.bashrc:
+
 # setup ruby gems PATH
 if command -v ruby >/dev/null && command -v gem >/dev/null; then
-    RUBYPATH="$(ruby -r rubygems -e 'puts Gem.user_dir')"
-    export PATH="$RUBYPATH/bin:$PATH"
+    eval "$(rbenv init -)"
+    export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 fi
 
 #setup TheFuck
@@ -191,6 +194,7 @@ alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH"
 #setup NODE
 export N_PREFIX="$HOME/.n"
 export PATH=$N_PREFIX/bin:$PATH
+export NODE_PATH=$N_PREFIX/bin
 
 # RUST - cargo
 if [ -d "$HOME/.cargo/" ]; then
