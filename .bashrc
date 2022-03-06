@@ -61,6 +61,7 @@ fi
 
 # some more ls aliases
 alias ll='ls -alF'
+alias lls='ls -AlFbhv --color=always | less -ER'
 alias la='ls -A'
 alias l='ls -F -1'
 
@@ -117,6 +118,7 @@ function webm2gif() {
     ffmpeg -i "$1" "${1%.webm}.gif"
 }
 
+# tmux aliases
 alias ta='tmux attach -t'
 alias ts='tmux switch -t'
 alias tn=_ttr_new_tmux_session
@@ -133,6 +135,9 @@ alias shrug='echo -n "¯\_(ツ)_/¯" | xclip -sel c'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 alias o='xdg-open'
 alias copy='xclip -sel clip'
+
+alias gentmp='echo tmp-$(date +%Y%m%d%H%M%S)'
+alias genpwd='cat /dev/urandom | tr -cd "3-9A-HJ-NP-Z" | head -c 32'
 
 # MAN sizing of maxwidth 120 for terminals bigger than 120
 better_man() {

@@ -30,3 +30,4 @@
 	ui = auto
 [core]
 	editor = vim
+	autocrlf = input
