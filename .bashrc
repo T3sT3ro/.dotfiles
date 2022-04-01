@@ -16,17 +16,17 @@
 
 # this tells anyone logged into machine that he is logged via SSH
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-  SESSION_TYPE=remote/ssh
-# many other tests omitted
+    SESSION_TYPE=remote/ssh
+    # many other tests omitted
 else
-  case $(ps -o comm= -p $PPID) in
-    sshd|*/sshd) SESSION_TYPE=remote/ssh;;
-  esac
+    case $(ps -o comm= -p $PPID) in
+        sshd|*/sshd) SESSION_TYPE=remote/ssh;;
+    esac
 fi
 export SESSION_TYPE
 
 # remap prefix-r to reload tmux conf
-if [[ $TMUX && $SESSION_TYPE = remote/ssh ]]; then 
+if [[ $TMUX && $SESSION_TYPE = remote/ssh ]]; then
     tmux unbind C-a #if it persisted somehow
     tmux set -g prefix C-b
     tmux bind C-b send-prefix
@@ -40,7 +40,7 @@ fi
 
 # alias to manage dotfiles.
 function dotfiles {
-   /usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME "$@"
+    /usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME "$@"
 }
 if [ -f /usr/share/bash-completion/completions/git ]; then
     source /usr/share/bash-completion/completions/git
@@ -53,7 +53,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias ls='ls --color=auto'
     # alias dir='dir --color=auto'
     # alias vdir='vdir --color=auto'
-
+    
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
@@ -61,7 +61,9 @@ fi
 
 # some more ls aliases
 alias ll='ls -alF'
-alias lls='ls -AlFbhv --color=always | less -ER'
+lls() {
+    ls -AlFbhv --color=always "$@" | less -XER
+}
 alias la='ls -A'
 alias l='ls -F -1'
 
@@ -101,31 +103,41 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 [ -f ~/.tldr-completion.bash ] && source ~/.tldr-completion.bash
 
 # tab completion to attach to tmux session via `t [name]`
-function _ttr_tmux_session_complete {
-    COMPREPLY=($(compgen -W "$(tmux ls -F '#{session_name}')" "${COMP_WORDS[1]}"))
+function t_complete {
+    SESSIONS=$(tmux ls)
+    if [[ $? ]]; then # if the server is online
+        COMPREPLY=($(compgen -W "$(tmux ls -F '#{session_name}')" "${COMP_WORDS[1]}"))
+    fi;
 }
 
-# creates new tmux session or attaches to a codename
-function _ttr_new_tmux_session {
-    if [[ $# -eq 0 ]]; then # create new session
-        tmux new-session -s $(codename -s '_')
+# intended usage:
+# t -> if not alive -> resurrect and attach using "tmux"
+#   -> if alive -> attach to latest
+# t <session> -> if not alive -> resurrect, with session
+    #             -> if alive -> attach to named session
+function t() {
+    SESSIONS=$(tmux list-session 2>/dev/null)
+    if [ -n "$1" ]; then
+        tmux a -t "$1"
     else
-        tmux attach-session -t $1
-    fi
+        tmux a 
+    fi;
 }
 
 function webm2gif() {
     ffmpeg -i "$1" "${1%.webm}.gif"
 }
 
+export -f t
+
 # tmux aliases
 alias ta='tmux attach -t'
 alias ts='tmux switch -t'
 alias tn=_ttr_new_tmux_session
-alias t='tmux attach || _ttr_new_tmux_session'
+# alias t='tmux attach || _ttr_new_tmux_session'
 alias tl='tmux ls'
 
-complete -F _ttr_tmux_session_complete t
+complete -F t_complete t
 
 alias f='formatter'
 alias wp="cd ~/workspace"
@@ -136,13 +148,13 @@ alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 alias o='xdg-open'
 alias copy='xclip -sel clip'
 
-alias gentmp='echo tmp-$(date +%Y%m%d%H%M%S)'
+alias gentmp='date +tmp+%Y%m%d%H%M%S'
 alias genpwd='cat /dev/urandom | tr -cd "3-9A-HJ-NP-Z" | head -c 32'
 
 # MAN sizing of maxwidth 120 for terminals bigger than 120
 better_man() {
     if (( $(tput cols) <= 130 )); then
-        /usr/bin/man $@ 
+        /usr/bin/man $@
     else
         MANWIDTH=120 /usr/bin/man $@
     fi
@@ -153,8 +165,8 @@ alias man=better_man #'if (( $(tput cols) <= 130 )); then MANWIDTH=$( (( $(tput 
 
 
 # LESS coloring. Will guess based on content if can't find lexer
-export LESSOPEN="| pygmentize -gO style=monokai %s" 
-export LESS=' -R --mouse --wheel-lines=3' 
+export LESSOPEN="| pygmentize -gO style=monokai %s"
+export LESS=' -R --mouse --wheel-lines=3'
 
 # MAN COLORING
 export LESS_TERMCAP_mb=$'\e[1;5;32m' # start blink

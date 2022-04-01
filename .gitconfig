@@ -10,6 +10,7 @@
     publish = "!git push -u origin $(git branch-name)"
     fixup="commit --amend --no-edit"
     reword="commit --amend -m"
+    show-tracked="ls-tree -r master --name-only"
 [merge]
 	tool = vscode
 [mergetool "vscode"]
