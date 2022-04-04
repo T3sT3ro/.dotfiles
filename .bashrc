@@ -1,3 +1,10 @@
+
+# { This profiles the bashrc
+#exec 3>&2 2> >( tee /tmp/sample-$$.log |
+#                  sed -u 's/^.*$/now/' |
+#                  date -f - +%s.%N >/tmp/sample-$$.tim)
+#set -x
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -185,9 +192,11 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 . ~/.prompt.sh
 
 # autojump
-if [ -d /usr/share/autojump ]; then
-    . /usr/share/autojump/autojump.sh
-fi
+# if [ -d /usr/share/autojump ]; then
+#     . /usr/share/autojump/autojump.sh
+# fi
+# zoxide instead of autojump
+eval "$(zoxide init bash)"
 
 # Load rbenv automatically by appending
 # the following to ~/.bashrc:
@@ -223,3 +232,22 @@ export SDKMAN_DIR="$HOME/.sdkman"
 if [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]]; then
     source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
+
+# THIS PROFILES THE BASHRC }
+#set +x
+#exec 2>&3 3>&-
+#TIM=$$
+#paste <(
+#    while read tim ;do
+#        [ -z "$last" ] && last=${tim//.} && first=${tim//.}
+#        crt=000000000$((${tim//.}-10#0$last))
+#        ctot=000000000$((${tim//.}-10#0$first))
+#        printf "%12.9f %12.9f\n" ${crt:0:${#crt}-9}.${crt:${#crt}-9} \
+#                                 ${ctot:0:${#ctot}-9}.${ctot:${#ctot}-9}
+#        last=${tim//.}
+#      done < /tmp/sample-$TIM.tim
+#  ) /tmp/sample-$TIM.log
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
