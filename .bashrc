@@ -1,8 +1,8 @@
 
 # { This profiles the bashrc
-#exec 3>&2 2> >( tee /tmp/sample-$$.log |
+#exec 3>&2 2> >( tee sample.log |
 #                  sed -u 's/^.*$/now/' |
-#                  date -f - +%s.%N >/tmp/sample-$$.tim)
+#                  date -f - +%s.%N >sample.tim)
 #set -x
 
 # ~/.bashrc: executed by bash(1) for non-login shells.
@@ -198,20 +198,6 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 # zoxide instead of autojump
 eval "$(zoxide init bash)"
 
-# Load rbenv automatically by appending
-# the following to ~/.bashrc:
-
-# setup ruby gems PATH
-if command -v ruby >/dev/null && command -v gem >/dev/null; then
-    eval "$(rbenv init -)"
-    export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
-fi
-
-#setup TheFuck
-if ( command -v thefuck >/dev/null ); then
-    eval "$(thefuck --alias)"
-fi
-
 # setup ANTLR
 export CLASSPATH=".:/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH"
 alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
@@ -236,17 +222,6 @@ fi
 # THIS PROFILES THE BASHRC }
 #set +x
 #exec 2>&3 3>&-
-#TIM=$$
-#paste <(
-#    while read tim ;do
-#        [ -z "$last" ] && last=${tim//.} && first=${tim//.}
-#        crt=000000000$((${tim//.}-10#0$last))
-#        ctot=000000000$((${tim//.}-10#0$first))
-#        printf "%12.9f %12.9f\n" ${crt:0:${#crt}-9}.${crt:${#crt}-9} \
-#                                 ${ctot:0:${#ctot}-9}.${ctot:${#ctot}-9}
-#        last=${tim//.}
-#      done < /tmp/sample-$TIM.tim
-#  ) /tmp/sample-$TIM.log
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
