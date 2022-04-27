@@ -1,5 +1,7 @@
+#!/bin/bash
 # PROMPT settings
 
+. ~/.bashrc.d/promptrc
 # debians
 [ -f /usr/lib/git-core/git-sh-prompt ] && source /usr/lib/git-core/git-sh-prompt
 # centos, fedora (yum)

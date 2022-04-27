@@ -21,58 +21,15 @@
 # =============================================
 # aliases and utilities
 
-# this tells anyone logged into machine that he is logged via SSH
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    SESSION_TYPE=remote/ssh
-    # many other tests omitted
-else
-    case $(ps -o comm= -p $PPID) in
-        sshd|*/sshd) SESSION_TYPE=remote/ssh;;
-    esac
-fi
-export SESSION_TYPE
+. ~/.bashrc.d/remote
+. ~/.bashrc.d/dotfiles
+. ~/.bashrc.d/aliases
+. ~/.bashrc.d/tmux
+. ~/.bashrc.d/prompt
 
-# remap prefix-r to reload tmux conf
-if [[ $TMUX && $SESSION_TYPE = remote/ssh ]]; then
-    tmux unbind C-a #if it persisted somehow
-    tmux set -g prefix C-b
-    tmux bind C-b send-prefix
-    tmux set status-style bg=blue,fg=white
-    tmux set pane-active-border-style fg=yellow,bg=blue
-    tmux refresh-client -S
-fi
+# github cli completion
+eval "$(gh completion -s bash)"
 
-#REMOTE=$(who am i | awk -F' ' '{printf $5}')
-#[[ $REMOTE =~ \([-a-zA-Z0-9\.]+\)$ ]] && REMOTE=true || REMOTE=false
-
-# alias to manage dotfiles.
-function dotfiles {
-    /usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME "$@"
-}
-if [ -f /usr/share/bash-completion/completions/git ]; then
-    source /usr/share/bash-completion/completions/git
-    __git_complete dotfiles __git_main
-fi
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    # alias dir='dir --color=auto'
-    # alias vdir='vdir --color=auto'
-    
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
-# some more ls aliases
-alias ll='ls -alF'
-lls() {
-    ls -AlFbhv --color=always "$@" | less -XER
-}
-alias la='ls -A'
-alias l='ls -F -1'
 
 # Add an "alert" alias for long running commands.  Use like so:
 # don't put duplicate lines or lines starting with space in the history.
@@ -102,72 +59,11 @@ stty stop undef
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 
-# alert will send a desktop notification when command ends.
-# input will be used to set notification text
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # tldr completion
 [ -f ~/.tldr-completion.bash ] && source ~/.tldr-completion.bash
 
-# tab completion to attach to tmux session via `t [name]`
-function t_complete {
-    SESSIONS=$(tmux ls)
-    if [[ $? ]]; then # if the server is online
-        COMPREPLY=($(compgen -W "$(tmux ls -F '#{session_name}')" "${COMP_WORDS[1]}"))
-    fi;
-}
 
-# intended usage:
-# t -> if not alive -> resurrect and attach using "tmux"
-#   -> if alive -> attach to latest
-# t <session> -> if not alive -> resurrect, with session
-    #             -> if alive -> attach to named session
-function t() {
-    SESSIONS=$(tmux list-session 2>/dev/null)
-    if [ -n "$1" ]; then
-        tmux a -t "$1"
-    else
-        tmux a 
-    fi;
-}
-
-function webm2gif() {
-    ffmpeg -i "$1" "${1%.webm}.gif"
-}
-
-export -f t
-
-# tmux aliases
-alias ta='tmux attach -t'
-alias ts='tmux switch -t'
-alias tn=_ttr_new_tmux_session
-# alias t='tmux attach || _ttr_new_tmux_session'
-alias tl='tmux ls'
-
-complete -F t_complete t
-
-alias f='formatter'
-alias wp="cd ~/workspace"
-alias notes="code ~/notes.md"
-alias lenny='echo -n "( ͡° ͜ʖ ͡°)" | xclip -sel c'
-alias shrug='echo -n "¯\_(ツ)_/¯" | xclip -sel c'
-alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
-alias o='xdg-open'
-alias copy='xclip -sel clip'
-
-alias gentmp='date +tmp+%Y%m%d%H%M%S'
-alias genpwd='cat /dev/urandom | tr -cd "3-9A-HJ-NP-Z" | head -c 32'
-
-# MAN sizing of maxwidth 120 for terminals bigger than 120
-better_man() {
-    if (( $(tput cols) <= 130 )); then
-        /usr/bin/man $@
-    else
-        MANWIDTH=120 /usr/bin/man $@
-    fi
-}
-
-alias man=better_man #'if (( $(tput cols) <= 130 )); then MANWIDTH=$( (( $(tput cols) <= 130 )) && echo $(tput cols) || echo 120) man'
 # --------------------------------
 
 
@@ -188,15 +84,14 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 # =============================================
 #
 
-# custom prompt by Tooster
-. ~/.prompt.sh
 
 # autojump
 # if [ -d /usr/share/autojump ]; then
 #     . /usr/share/autojump/autojump.sh
 # fi
 # zoxide instead of autojump
-eval "$(zoxide init bash)"
+[ -f ~/.todo.txt ] && cat ~/.todo.txt
+eval "$($HOME/.local/bin/zoxide init bash)"
 
 # setup ANTLR
 export CLASSPATH=".:/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH"
