@@ -30,6 +30,10 @@ function webm2gif() {
     ffmpeg -i "$1" "${1%.webm}.gif"
 }
 
+function webm2mp4() {
+    ffmpeg -i "$1" "${1%.webm}.mp4"
+}
+
 
 alias f='formatter'
 alias wp="cd ~/workspace"

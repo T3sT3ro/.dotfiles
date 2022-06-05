@@ -32,3 +32,4 @@
 [core]
 	editor = vim
 	autocrlf = input
+#    pager = "less -iXFR"
