@@ -26,6 +26,7 @@
 . ~/.bashrc.d/aliases
 . ~/.bashrc.d/tmux
 . ~/.bashrc.d/prompt
+. ~/.bashrc.d/todo
 
 # github cli completion
 eval "$(gh completion -s bash)"
@@ -90,7 +91,6 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 #     . /usr/share/autojump/autojump.sh
 # fi
 # zoxide instead of autojump
-[ -f ~/.todo.txt ] && cat ~/.todo.txt
 eval "$($HOME/.local/bin/zoxide init bash)"
 
 # setup ANTLR
