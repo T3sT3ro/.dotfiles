@@ -31,3 +31,7 @@ fi
 if [ -d "$HOME/.cargo/" ] ; then
     . "$HOME/.cargo/env"
 fi
+
+
+# Added by Toolbox App
+export PATH="$PATH:/home/tooster/.local/share/JetBrains/Toolbox/scripts"
