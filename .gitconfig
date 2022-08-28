@@ -14,7 +14,7 @@
 [merge]
 	tool = vscode
 [mergetool "vscode"]
-	cmd = code --wait $MERGED
+	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 [mergetool "unity"]
 	trustExitCode = false
 	cmd = /home/tooster/Unity/Hub/Editor/2018.4.8f1/Editor/Data/Tools/UnityYAMLMerge merge -p "$BASE" "$REMOTE" "$LOCAL" "$MERGED"

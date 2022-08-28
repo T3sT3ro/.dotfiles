@@ -38,11 +38,11 @@ function webm2mp4() {
 alias f='formatter'
 alias wp="cd ~/workspace"
 alias notes="code ~/notes"
-alias lenny='echo -n "( ͡° ͜ʖ ͡°)" | xclip -sel c'
-alias shrug='echo -n "¯\_(ツ)_/¯" | xclip -sel c'
+alias lenny='echo -n "( ͡° ͜ʖ ͡°)" | xsel --clipboard'
+alias shrug='echo -n "¯\_(ツ)_/¯" | xsel --clipboard'
 alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 alias o='xdg-open'
-alias copy='xclip -sel clip'
+alias copy='xclip --clipboard'
 
 alias gentmp='date +tmp+%Y%m%d%H%M%S'
 alias genpwd='cat /dev/urandom | tr -cd "3-9A-HJ-NP-Z" | head -c 32'
