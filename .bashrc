@@ -91,7 +91,18 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 #     . /usr/share/autojump/autojump.sh
 # fi
 # zoxide instead of autojump
-eval "$($HOME/.local/bin/zoxide init bash)"
+
+if ! command -v zoxide &> /dev/null; then
+    read -p "Install zoxide?? " -n 1 -r
+    echo    # (optional) move to a new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+        eval "$($HOME/.local/bin/zoxide init bash)"
+    fi
+else
+    eval "$($HOME/.local/bin/zoxide init bash)"
+fi
 
 # setup ANTLR
 export CLASSPATH=".:/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH"
