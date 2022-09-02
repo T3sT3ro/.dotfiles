@@ -11,6 +11,7 @@
     fixup="commit --amend --no-edit"
     reword="commit --amend -m"
     show-tracked="ls-tree -r master --name-only"
+    pull-all="pull --recurse-submodules"
 [merge]
 	tool = vscode
 [mergetool "vscode"]
