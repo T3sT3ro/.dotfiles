@@ -21,12 +21,13 @@
 # =============================================
 # aliases and utilities
 
-. ~/.bashrc.d/remote
-. ~/.bashrc.d/dotfiles
-. ~/.bashrc.d/aliases
-. ~/.bashrc.d/tmux
-. ~/.bashrc.d/prompt
-. ~/.bashrc.d/todo
+. ~/.bashrc.d/remote.sh
+. ~/.bashrc.d/dotfiles.sh
+. ~/.bashrc.d/aliases.sh
+. ~/.bashrc.d/tmux.sh
+. ~/.bashrc.d/prompt.sh
+. ~/.bashrc.d/todo.sh
+. ~/.bashrc.d/conda.sh
 
 # github cli completion
 eval "$(gh completion -s bash)"
@@ -124,3 +125,4 @@ fi
 
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
