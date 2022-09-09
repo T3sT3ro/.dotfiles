@@ -30,7 +30,7 @@
 . ~/.bashrc.d/conda.sh
 
 # github cli completion
-eval "$(gh completion -s bash)"
+[[ -f /usr/bin/gh ]] && eval "$(gh completion -s bash)"
 
 
 # Add an "alert" alias for long running commands.  Use like so:
