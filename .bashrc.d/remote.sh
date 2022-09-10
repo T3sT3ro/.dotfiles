@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # this tells anyone logged into machine that he is logged via SSH
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ $(who am i | awk '{print $5}') ]; then
     SESSION_TYPE=remote/ssh
     # many other tests omitted
 else

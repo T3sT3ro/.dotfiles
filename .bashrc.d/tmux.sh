@@ -28,7 +28,7 @@ export -f t
 # tmux aliases
 alias ta='tmux attach -t'
 alias ts='tmux switch -t'
-alias tn=_ttr_new_tmux_session
+# alias tn=_ttr_new_tmux_session
 # alias t='tmux attach || _ttr_new_tmux_session'
 alias tl='tmux ls'
 
