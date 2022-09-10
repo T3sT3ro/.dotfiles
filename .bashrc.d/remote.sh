@@ -2,7 +2,7 @@
 
 # this tells anyone logged into machine that he is logged via SSH
 
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || (pstree -s $$ | grep sshd ); then
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || (pstree -s $$ | grep -q sshd ); then
     SESSION_TYPE=remote/ssh
     # many other tests omitted
 else
