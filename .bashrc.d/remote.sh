@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # this tells anyone logged into machine that he is logged via SSH
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ $(who am i | awk '{print $5}') ]; then
+
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || (pstree -s $$ | grep sshd ); then
     SESSION_TYPE=remote/ssh
     # many other tests omitted
 else
@@ -18,6 +19,11 @@ if [[ $TMUX && $SESSION_TYPE = remote/ssh ]]; then
     tmux bind C-b send-prefix
     tmux set status-style bg=blue,fg=white
     tmux set pane-active-border-style fg=yellow,bg=blue
+    tmux refresh-client -S
+else
+    tmux unbind C-b
+    tmux set -g prefix C-a
+    tmux bind C-a send-prefix
     tmux refresh-client -S
 fi
 
