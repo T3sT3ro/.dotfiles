@@ -20,11 +20,6 @@ if [[ $TMUX && $SESSION_TYPE = remote/ssh ]]; then
     tmux set status-style bg=blue,fg=white
     tmux set pane-active-border-style fg=yellow,bg=blue
     tmux refresh-client -S
-else
-    tmux unbind C-b
-    tmux set -g prefix C-a
-    tmux bind C-a send-prefix
-    tmux refresh-client -S
 fi
 
 #REMOTE=$(who am i | awk -F' ' '{printf $5}')
