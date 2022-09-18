@@ -111,9 +111,15 @@ let g:NERDTreeWinPos = "right"
 
 
 map <F2> :ls<CR>:e
+" move block up/down with in all modes
 nnoremap <A-S-Down> :m .+1<CR>==
 nnoremap <A-S-Up> :m .-2<CR>==
+
 inoremap <A-S-Down> <Esc>:m .+1<CR>==gi
 inoremap <A-S-Up> <Esc>:m .-2<CR>==gi
+
 vnoremap <A-S-Down> :m '>+1<CR>gv=gv
 vnoremap <A-S-Up> :m '<-2<CR>gv=gv
+
+" C-r in visual to replace text, accept with y, skip with n
+vnoremap <C-r> "hy:%s#<C-r>h##gc<left><left><left>

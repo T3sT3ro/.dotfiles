@@ -1,9 +1,14 @@
 
-# { This profiles the bashrc
-#exec 3>&2 2> >( tee sample.log |
-#                  sed -u 's/^.*$/now/' |
-#                  date -f - +%s.%N >sample.tim)
-#set -x
+# { This profiles the bashrc, the opening bracket is just to go to matching one in vim with %
+if [[ $PROFILEBASHSTARTUP ]]; then 
+    TRACEFILE=$(mktemp /tmp/trace.XXX)
+    TIMINGFILE=$(mktemp /tmp/timing.XXX)
+    STARTTIME=$(date +%s.%N)
+    exec 3>&2 2> >( tee $TRACEFILE |
+                      sed -u 's/^.*$/now/' |
+                      date -f - +%s.%N >$TIMINGFILE)
+    set -x
+fi
 
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
@@ -27,7 +32,7 @@
 . ~/.bashrc.d/tmux.sh
 . ~/.bashrc.d/prompt.sh
 . ~/.bashrc.d/todo.sh
-. ~/.bashrc.d/conda.sh
+# . ~/.bashrc.d/conda.sh
 
 # github cli completion
 [[ -f /usr/bin/gh ]] && eval "$(gh completion -s bash)"
@@ -116,9 +121,6 @@ if [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]]; then
     source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
 
-# THIS PROFILES THE BASHRC }
-#set +x
-#exec 2>&3 3>&-
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
@@ -126,3 +128,12 @@ fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+# THIS PROFILES THE BASHRC }
+if [[ $PROFILEBASHSTARTUP ]]; then 
+    set +x
+    exec 2>&3 3>&-
+    BASHTRACELOG=$(mktemp /tmp/bashtracelog.XXX)
+    paste <(awk "{printf \"%f\t%f\",\$1,\$1-$STARTTIME; \$1=\"\"; print}" $TIMINGFILE) $TRACEFILE > $BASHTRACELOG
+    rm $TRACEFILE $TIMINGFILE
+    echo "Bash trace log saved to $BASHTRACELOG"
+fi
