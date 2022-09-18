@@ -1,4 +1,4 @@
-# { This profiles the bashrc, the opening bracket is just to go to matching one in vim with %
+#based on https://stackoverflow.com/a/20855353/5555799
 TRACEFILE=$(mktemp /tmp/trace.XXX)
 TIMINGFILE=$(mktemp /tmp/timing.XXX)
 STARTTIME=$(date +%s.%N)
