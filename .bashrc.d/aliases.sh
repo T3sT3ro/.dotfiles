@@ -58,4 +58,4 @@ better_man() {
 
 alias man=better_man #'if (( $(tput cols) <= 130 )); then MANWIDTH=$( (( $(tput cols) <= 130 )) && echo $(tput cols) || echo 120) man'
 
-alias profilebashstartup='PROFILEBASHSTARTUP=true exec bash'
+alias profilebashstartup='exec bash --rcfile ~/.bashrc.profiler'
