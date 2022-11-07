@@ -21,6 +21,7 @@
 . ~/.bashrc.d/prompt.sh
 . ~/.bashrc.d/todo.sh
 # . ~/.bashrc.d/conda.sh
+. ~/.bashrc.d/ferium.sh
 
 # github cli completion
 [[ -f /usr/bin/gh ]] && eval "$(gh completion -s bash)"
