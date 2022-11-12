@@ -5,6 +5,8 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+export GPG_TTY=$(tty)
+
 # escape sequences input (for example for colors): <CTRL>+V, <CTRL>+[, [, [code]
 
 # colored GCC warnings and errors
@@ -22,9 +24,6 @@
 . ~/.bashrc.d/todo.sh
 # . ~/.bashrc.d/conda.sh
 . ~/.bashrc.d/ferium.sh
-
-# github cli completion
-[[ -f /usr/bin/gh ]] && eval "$(gh completion -s bash)"
 
 
 # Add an "alert" alias for long running commands.  Use like so:
@@ -55,11 +54,6 @@ stty stop undef
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 
-
-# tldr completion
-[ -f ~/.tldr-completion.bash ] && source ~/.tldr-completion.bash
-
-
 # --------------------------------
 
 
@@ -80,6 +74,11 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 # =============================================
 #
 
+# github cli completion
+[[ -f /usr/bin/gh ]] && eval "$(gh completion -s bash)"
+
+# tldr completion
+[ -f ~/.tldr-completion.bash ] && source ~/.tldr-completion.bash
 
 # autojump
 # if [ -d /usr/share/autojump ]; then

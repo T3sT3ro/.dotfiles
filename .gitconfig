@@ -1,6 +1,7 @@
 [user]
 	email = 5300963+T3sT3ro@users.noreply.github.com
 	name = Tooster
+	signingkey = 57EE5A8A1DCCC88B
 [alias]
 	dog = log --decorate --oneline --graph
     adog = dog --all
@@ -34,3 +35,5 @@
 	editor = vim
 	autocrlf = input
 #    pager = "less -iXFR"
+[commit]
+	gpgsign = true
