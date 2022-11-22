@@ -1,7 +1,7 @@
 [user]
 	email = 5300963+T3sT3ro@users.noreply.github.com
 	name = Tooster
-	signingkey = 57EE5A8A1DCCC88B
+	signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfTgE7E8kIhip/fe8RT6p834nGcWEVhArSSxTfc0ZiZixnmLkCfFwnlR+V5JkiZAjKcuQAcGSgko0LfTPbqZ4DLzsaCI8C0U/xy5xkqRBSgxadKsHd876zCxbG+RZ0FSB/984nzZ5QaOsPXpr4T0TWj8VJMHR1Ocg1JlPTw/oNDQL+DbDyu+3XpdotMZDDxc00MyT3MLrXCpEpyMBmiSPCxvGOfG0LWyx7V9WiLSWI+HWXRaw8ddyYRUs4VzC3e6HEnJMmO2oGtIqm5912CFFd5XVBBvCQ/LQ4clBLdv5nChCRK7vAT31Yxaq0uopbN2U3X7Q2Y7uOeHdD439CuUGD tooster@toosterLap
 [alias]
 	dog = log --decorate --oneline --graph
     adog = dog --all
@@ -37,3 +37,5 @@
 #    pager = "less -iXFR"
 [commit]
 	gpgsign = true
+[gpg]
+	format = ssh
