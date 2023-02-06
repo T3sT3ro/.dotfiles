@@ -5,7 +5,10 @@
 [alias]
 	dog = log --decorate --oneline --graph
     adog = dog --all
-    ddog = log --graph --pretty=format:'%C(auto)%h%Creset %Cgreen%<(22)%cr%Creset - %s %C(dim italic yellow)<%an>%Creset %C(auto)%d%Creset' --abbrev-commit
+    dog2 = log --graph --pretty=format:'%C(auto)%<|(16)%h%Creset %C(dim green)%>|(18)%cr%Creset\t - %C(dim)%s %C(italic yellow)<%an>%Creset %C(auto)%d%Creset' --abbrev-commit
+    adog2 = dog2 --all
+    dog3 = log --all --graph --pretty=format:'%C(auto)%<|(20)%h%Creset %C(bold cyan)%cd%Creset %C(dim green)(%cr)%Creset %C(dim italic yellow)%<|(74)~%cn%Creset %C(auto)%d%Creset %>|(80)%m %C(dim)%s' --abbrev-commit --date=format-local:'%d-%m-%Y  %H:%M'
+    adog3 = dog3 --all
 	branch-name = "!git rev-parse --abbrev-ref HEAD"
 	seppuku = "!f(){ BNAME=$(git branch-name); git reset --hard origin/${BNAME}; }; f;"
     publish = "!git push -u origin $(git branch-name)"
@@ -39,3 +42,5 @@
 	gpgsign = true
 [gpg]
 	format = ssh
+[init]
+	defaultBranch = master
