@@ -1,13 +1,13 @@
 [user]
 	email = 5300963+T3sT3ro@users.noreply.github.com
 	name = Tooster
-	signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfTgE7E8kIhip/fe8RT6p834nGcWEVhArSSxTfc0ZiZixnmLkCfFwnlR+V5JkiZAjKcuQAcGSgko0LfTPbqZ4DLzsaCI8C0U/xy5xkqRBSgxadKsHd876zCxbG+RZ0FSB/984nzZ5QaOsPXpr4T0TWj8VJMHR1Ocg1JlPTw/oNDQL+DbDyu+3XpdotMZDDxc00MyT3MLrXCpEpyMBmiSPCxvGOfG0LWyx7V9WiLSWI+HWXRaw8ddyYRUs4VzC3e6HEnJMmO2oGtIqm5912CFFd5XVBBvCQ/LQ4clBLdv5nChCRK7vAT31Yxaq0uopbN2U3X7Q2Y7uOeHdD439CuUGD tooster@toosterLap
+	signingKey = /home/tooster/.ssh/id_rsa.pub
 [alias]
 	dog = log --decorate --oneline --graph
     adog = dog --all
     dog2 = log --graph --pretty=format:'%C(auto)%<|(16)%h%Creset %C(dim green)%>|(18)%cr%Creset\t - %C(dim)%s %C(italic yellow)<%an>%Creset %C(auto)%d%Creset' --abbrev-commit
     adog2 = dog2 --all
-    dog3 = log --all --graph --pretty=format:'%C(auto)%<|(20)%h%Creset %C(bold cyan)%cd%Creset %C(dim green)(%cr)%Creset %C(dim italic yellow)%<|(74)~%cn%Creset %C(auto)%d%Creset %>|(80)%m %C(dim)%s' --abbrev-commit --date=format-local:'%d-%m-%Y  %H:%M'
+    dog3 = log --all --graph --pretty=format:'%C(auto)%<|(20)%h%Creset %C(bold cyan)%cd%Creset %C(dim green)(%cr)%Creset %>|(74)%C(magenta)%G?%C(dim italic yellow) ~%cn%Creset %C(auto)%d%Creset %>|(80)%m %C(dim)%s' --abbrev-commit --date=format-local:'%d-%m-%Y %a %H:%M'
     adog3 = dog3 --all
 	branch-name = "!git rev-parse --abbrev-ref HEAD"
 	seppuku = "!f(){ BNAME=$(git branch-name); git reset --hard origin/${BNAME}; }; f;"
@@ -40,7 +40,11 @@
 #    pager = "less -iXFR"
 [commit]
 	gpgsign = true
+[tag]
+    gpgsign = true
 [gpg]
 	format = ssh
 [init]
 	defaultBranch = master
+[gpg "ssh"]
+	allowedSignersFile = /home/tooster/.ssh/allowed_signers

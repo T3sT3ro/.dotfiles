@@ -91,7 +91,6 @@ function __ttr_prompt {
     local USR="\\[[0;1;${USR_COLOR}m\\]\\u\\[[${HOST_COLOR}m\\]@\\h"
     local PWD_COLOR='\[[0;1;34m\]'
     local SHEBANG='\[[0m\]\$'
-    local GIT_FORMAT='\[[36m\](%s\[[36m\])'
     # TODO: fix CHROOT    
 
     # how __git_ps1 works can be found at /usr/lib/git-core/git-sh-prompt
@@ -100,10 +99,12 @@ function __ttr_prompt {
         PROMPT_DIRTRIM=$PROMPT_MULTILINE_DIRTRIM
         # HISTFMT prints first a colored box of proper width, then histnum from start, then continues after box
         local HISTFMT="$HIST_COLOR     \\[\r!\!\r$(tput cuf 5)\\]"
-        __git_ps1 "$RET [\\t] ${CHROOT}${USR}${RST}:${PWD_COLOR}\\w$RST\\n${HISTFMT}${RST}" " $SHEBANG " " $GIT_FORMAT"
+        local GIT_FORMAT='\[[36m\]╰(%s\[[36m\])'
+        __git_ps1 "$RET [\\t] ${CHROOT}${USR}${RST}$RST\\n${HISTFMT}${PWD_COLOR} \\w\\n${RST}" " $SHEBANG " "$GIT_FORMAT"
     else
         PROMPT_DIRTRIM=$PROMPT_INLINE_DIRTRIM
         local HISTFMT="$HIST_COLOR      \\[\r!\\!\r$(tput cuf 6)\\]"
+        local GIT_FORMAT='\[[36m\](%s\[[36m\])'
         if [[ $PROMPT_HISTNUM == true ]]; then RET="${HISTFMT}${RST}${RET}"; fi
         __git_ps1 "$RET ${CHROOT}${USR}${RST}:$PWD_COLOR\\w$RST" " $SHEBANG " " $GIT_FORMAT"
     fi

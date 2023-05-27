@@ -74,8 +74,18 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 # =============================================
 #
 
+#setup NODE
+export N_PREFIX="$HOME/.n"
+export PATH=$N_PREFIX/bin:$PATH
+export NODE_PATH=$N_PREFIX/bin
+
+## GLOBAL NODE MODULES HAVE TO BE USEDAFTER N SETUP
+
 # github cli completion
 [[ -f /usr/bin/gh ]] && eval "$(gh completion -s bash)"
+
+# github copilot cli
+eval "$(github-copilot-cli alias -- "$0")"
 
 # tldr completion
 [ -f ~/.tldr-completion.bash ] && source ~/.tldr-completion.bash
@@ -87,16 +97,6 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 # zoxide instead of autojump
 
 command -v zoxide &> /dev/null && eval "$($HOME/.local/bin/zoxide init bash)"
-
-# setup ANTLR
-export CLASSPATH=".:/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH"
-alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
-alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'
-
-#setup NODE
-export N_PREFIX="$HOME/.n"
-export PATH=$N_PREFIX/bin:$PATH
-export NODE_PATH=$N_PREFIX/bin
 
 # RUST - cargo
 if [ -d "$HOME/.cargo/" ]; then

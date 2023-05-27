@@ -1,4 +1,5 @@
 #based on https://stackoverflow.com/a/20855353/5555799
+NOW=$(date +%H:%M-%d.%m.%Y)
 TRACEFILE=$(mktemp /tmp/trace.XXX)
 TIMINGFILE=$(mktemp /tmp/timing.XXX)
 STARTTIME=$(date +%s.%N)
@@ -9,7 +10,7 @@ source ~/.bashrc
 
 set +x
 exec 2>&3 3>&-
-BASHTRACELOG=$(mktemp /tmp/bashtracelog.XXX)
+BASHTRACELOG=$(mktemp /tmp/bashtracelog.XXX-$NOW)
 paste <(awk "{printf \"%f\t%f\",\$1,\$1-$STARTTIME; \$1=\"\"; print}" $TIMINGFILE) $TRACEFILE > $BASHTRACELOG
 rm $TRACEFILE $TIMINGFILE
 echo "Bash trace log saved to $BASHTRACELOG"
