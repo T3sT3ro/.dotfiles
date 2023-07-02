@@ -45,9 +45,9 @@ function __ttr_prompt {
     #echo -en "[6n"
     #IFS=";" read -sdR -a curpos
     #(( curpos[1]!=1 )) && echo -e '[1;7;33m ⌥  [0m'
-    if [ "$(__ttr_get_terminal_column)" != 0 ]; then
-        echo -e '[1;7;33m ⌥  [0m'
-    fi
+#    if [ "$(__ttr_get_terminal_column)" != 0 ]; then
+#        EOL_FIXER='[1;7;33m ⌥  [0m\\n'
+#    fi
 
     #
     # GIT_PS1_DESCRIBE_STYLE
@@ -100,13 +100,13 @@ function __ttr_prompt {
         # HISTFMT prints first a colored box of proper width, then histnum from start, then continues after box
         local HISTFMT="$HIST_COLOR     \\[\r!\!\r$(tput cuf 5)\\]"
         local GIT_FORMAT='\[[36m\]╰(%s\[[36m\])'
-        __git_ps1 "$RET [\\t] ${CHROOT}${USR}${RST}$RST\\n${HISTFMT}${PWD_COLOR} \\w\\n${RST}" " $SHEBANG " "$GIT_FORMAT"
+        __git_ps1 "${EOL_FIXER}${RET} [\\t] ${CHROOT}${USR}${RST}\\n${HISTFMT}${PWD_COLOR} \\w\\n${RST}" " $SHEBANG " "$GIT_FORMAT"
     else
         PROMPT_DIRTRIM=$PROMPT_INLINE_DIRTRIM
         local HISTFMT="$HIST_COLOR      \\[\r!\\!\r$(tput cuf 6)\\]"
         local GIT_FORMAT='\[[36m\](%s\[[36m\])'
         if [[ $PROMPT_HISTNUM == true ]]; then RET="${HISTFMT}${RST}${RET}"; fi
-        __git_ps1 "$RET ${CHROOT}${USR}${RST}:$PWD_COLOR\\w$RST" " $SHEBANG " " $GIT_FORMAT"
+        __git_ps1 "${EOL_FIXER}${RET} ${CHROOT}${USR}${RST}:${PWD_COLOR}\\w${RST}" " $SHEBANG " " $GIT_FORMAT"
     fi
 }
 
