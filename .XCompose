@@ -1,7 +1,14 @@
-# alsmot equal
+# almost equal
 <Multi_key> <asciitilde> <equal> : "≅" U2245 # APPROXIMATELY OR ACTUALLY EQUAL TO
 <Multi_key> <equal> <asciitilde> : "≅" U2245 # APPROXIMATELY OR ACTUALLY EQUAL TO
 <Multi_key> <asciitilde> <asciitilde> : "≈" U2248 # ALMOST EQUAL TO
+
+# emoji
+<Multi_key> <E> <s> : "¯\_(ツ)_/¯"      # shrug
+<Multi_key> <E> <t> : "(╯°□°）╯︵ ┻━┻"  # tableflip
+<Multi_key> <E> <l> : "( ͡° ͜ʖ ͡°)"        # lenny
+
+
 
 # GREEK CAPITAL LETTERS
 <Multi_key> <G> <A> : "Α"    U0391    # GREEK CAPITAL LETTER ALPHA

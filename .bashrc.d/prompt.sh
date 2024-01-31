@@ -23,6 +23,20 @@ __ttr_get_terminal_column() {
   echo "$((${pos[1]} - 1))"
 }
 
+__term_row() {
+    local COL
+    local ROW
+    IFS=';' read -sdR -p $'\E[6n' ROW COL
+    echo "${ROW#*[}"
+}
+
+__term_col() {
+    local COL
+    local ROW
+    IFS=';' read -sdR -p $'\E[6n' ROW COL
+    echo "${COL}"
+}
+
 
 PROMPT_MULTILINE=90
 PROMPT_HISTNUM=true
@@ -45,8 +59,9 @@ function __ttr_prompt {
     #echo -en "[6n"
     #IFS=";" read -sdR -a curpos
     #(( curpos[1]!=1 )) && echo -e '[1;7;33m ⌥  [0m'
-#    if [ "$(__ttr_get_terminal_column)" != 0 ]; then
-#        EOL_FIXER='[1;7;33m ⌥  [0m\\n'
+    #if [ "$(__ttr_get_terminal_column)" != 0 ]; then
+#    if [ "$(__term_col)" != 1 ]; then
+#        EOL_FIXER='[1;7;33m ⌥  [0m\n'
 #    fi
 
     #
