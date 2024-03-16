@@ -16,17 +16,16 @@ export GPG_TTY=$(tty)
 # =============================================
 # aliases and utilities
 
-. ~/.bashrc.d/remote.sh
-. ~/.bashrc.d/dotfiles.sh
-. ~/.bashrc.d/aliases.sh
-. ~/.bashrc.d/tmux.sh
+#. ~/.bashrc.d/remote.sh
+#. ~/.bashrc.d/dotfiles.sh
+#. ~/.bashrc.d/aliases.sh
+#. ~/.bashrc.d/tmux.sh
 . ~/.bashrc.d/prompt.sh
-. ~/.bashrc.d/todo.sh
+#. ~/.bashrc.d/todo.sh
 # . ~/.bashrc.d/conda.sh
-. ~/.bashrc.d/ferium.sh
-. ~/.bashrc.d/banner.sh
+#. ~/.bashrc.d/ferium.sh
 
-# Add an "alert" alias for long running commands.  Use like so:
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -58,7 +57,7 @@ stty stop undef
 
 
 # LESS coloring. Will guess based on content if can't find lexer
-#export LESSOPEN="| pygmentize -gO style=monokai %s"
+export LESSOPEN="| pygmentize -gO style=monokai %s"
 export LESS=' -R --mouse --wheel-lines=3'
 
 # MAN COLORING
@@ -74,24 +73,24 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 # =============================================
 #
 
-# setup NODE
+# mount AVFS
+# mountavfs
+
+#setup NODE
 export N_PREFIX="$HOME/.n"
 export PATH=$N_PREFIX/bin:$PATH
 export NODE_PATH=$N_PREFIX/bin
 
-# setup NEOVIM
-export PATH="$PATH:/opt/nvim-linux64/bin"
-
 ## GLOBAL NODE MODULES HAVE TO BE USEDAFTER N SETUP
 
 # github cli completion
-[[ -f /usr/bin/gh ]] && eval "$(gh completion -s bash)"
+# [[ -f /usr/bin/gh ]] && eval "$(gh completion -s bash)"
 
 # github copilot cli
-eval "$(github-copilot-cli alias -- "$0")"
+# eval "$(github-copilot-cli alias -- "$0")"
 
 # tldr completion
-[ -f ~/.tldr-completion.bash ] && source ~/.tldr-completion.bash
+# [ -f ~/.tldr-completion.bash ] && source ~/.tldr-completion.bash
 
 # autojump
 # if [ -d /usr/share/autojump ]; then
@@ -99,22 +98,22 @@ eval "$(github-copilot-cli alias -- "$0")"
 # fi
 # zoxide instead of autojump
 
-command -v zoxide &> /dev/null && eval "$(zoxide init bash)"
+# command -v zoxide &> /dev/null && eval "$($HOME/.local/bin/zoxide init bash)"
 
 # RUST - cargo
-if [ -d "$HOME/.cargo/" ]; then
-    . "$HOME/.cargo/env"
-fi
+#if [ -d "$HOME/.cargo/" ]; then
+#    . "$HOME/.cargo/env"
+#fi
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-if [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]]; then
-    source "$HOME/.sdkman/bin/sdkman-init.sh"
-fi
+#export SDKMAN_DIR="$HOME/.sdkman"
+#if [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]]; then
+#    source "$HOME/.sdkman/bin/sdkman-init.sh"
+#fi
 
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Generated for envman. Do not edit.
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+#[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
+
+#[ -f ~/.fzf.bash ] && source ~/.fzf.bash

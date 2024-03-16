@@ -1,0 +1,115 @@
+#!/bin/bash
+
+# author:   Tooster 
+# license:  MIT, full license text at https://mit-license.org/
+# source:   https://gist.github.com/T3sT3ro/bc06294f51091c0e34176c62683d538e
+#
+# Reads the tips json file, prints it and advances to a next tip. With some util arguments to make working with it easier
+#
+# requirements:
+# - jq - for tips database (json) management
+# - sponge (from `moreutils` package) - for updating file
+# - gum - for nice prompt: https://github.com/charmbracelet/gum
+# - glow - for nice markdown output (can be adapted to use `gum format` alone instead of `glow`): https://github.com/charmbracelet/glow
+#
+# for now, not strictly following https://clig.dev/
+
+HELP="\
+Utility for printing and managing helpful tips in the terminal,
+similar to IDEs tips shown on startup. For use in startup script.
+Uses tips database at 'TIPS_DB' (defaults to '~/.config/tips.json').
+
+<number>                print zero-indexed nth tip
+-p --previous           move to and print previous tip
+-n --next               (default) move to and print next tip
+-c --current            print current tip, don't move
+   --add                prompt and append new tip to db
+   --import             add all tips from one db (read from STDIN) to your db
+   --db                 prints the database location
+   --stats              prints the tips database stats
+   --add-remote <url>   adds repo (url to tips.json db in remote)
+   --fetch              fetches and adds tips from repos to local json db
+   --upgrade            upgrades tips utility (overwrites current installation in .local/bin/tips)
+-h -?                   print this message"
+
+
+
+# if `tip` and `tips.json` are held in the same directory
+TIPS_DB="${TIPS_DB:-$HOME/.config/tips.json}"
+TIPS_URL="https://gist.githubusercontent.com/T3sT3ro/bc06294f51091c0e34176c62683d538e"
+TIPS_UPGRADE_URL="$TIPS_URL/raw/tips"
+
+printAndMove() {
+  if [ ! -f "$TIPS_DB" ]; then echo "missing tips file: $TIPS_DB" >&2; exit 1; fi
+  offset=${1:-1}
+
+  read -r next text < <(jq -r --arg offset $offset '((.current + ($offset | tonumber)) % (.tips | length)) as $next | [$next, .tips[$next]] | @tsv' "$TIPS_DB")
+
+  printf "
+  # TIP #$(((next+1))):
+  $text" | glow -
+
+  jq --arg next $next '.current = ($next | tonumber)' "$TIPS_DB" | sponge "$TIPS_DB"
+}
+
+shopt -s extglob
+case "${1:--n}" in
+  -p|--previous) 
+    printAndMove -1
+    ;;
+  -c|--current) 
+    printAndMove 0
+    ;;
+  --add) 
+    TIP_TEXT=$(
+    gum write --show-cursor-line \
+      --header="# TIP $(jq '.tips | length' "$TIPS_DB"):" \
+      --placeholder "(Submit with Ctrl+D)" \
+      | jq -sR 'gsub("^\\s+|\\s+$"; "")'
+    )
+    jq ".tips += [$TIP_TEXT]" "$TIPS_DB" | sponge "$TIPS_DB"
+    ;;
+  --import)
+    jq -s '.[0].tips += .[1].tips | .[0] | .tips |= (map({key:.,value:1}) | from_entries | keys_unsorted)' "$TIPS_DB" - | sponge "$TIPS_DB"
+    ;;
+  -n|--next)
+    printAndMove 1
+    ;;
+  --db)
+    echo $TIPS_DB
+    ;;
+  --stats)
+    jq -r --arg location "$TIPS_DB" '"
+  db file: \($location)
+  entries: \(.tips | length)
+  current: \(.current)
+  remotes: \(.remotes | length)"' \
+  "$TIPS_DB"
+    ;;
+  ?([+-])+([[:digit:]]))
+    jq -r --arg i $1 '"# TIP #\($i | tonumber):\n\(.tips[$i | tonumber - 1])"' "$TIPS_DB" | glow
+     ;;
+  --add-remote)
+    if [ -z "$2" ]; then echo 'usage: tips --add-repo <url>' >&2; exit 1; fi;
+    jq --arg url "$2" '.remotes += [$url] | .remotes |= unique' "$TIPS_DB" | sponge "$TIPS_DB"
+    ;;
+  --fetch)
+    for URL in $(jq -r '.remotes[]' "$TIPS_DB"); do
+      curl $URL | tips --import
+    done
+    ;;
+  --upgrade)
+    TIPS_SH=$(which tips)
+    if [[ ! -f $TIPS_SH ]] || gum confirm "$TIPS_SH (script) already exists, overwrite with remote version?"; then
+      echo "Saving to $TIPS_SH..."
+      curl -o "$TIPS_SH" "$TIPS_UPGRADE_URL"
+    fi
+    ;;
+  -h|-?|--help)
+    echo "$HELP"
+    ;;
+  *) 
+    echo "$HELP"
+    exit 1;
+    ;;
+esac

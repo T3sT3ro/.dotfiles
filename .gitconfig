@@ -22,7 +22,7 @@
 	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 [mergetool "unity"]
 	trustExitCode = false
-	cmd = /home/tooster/Unity/Hub/Editor/2018.4.8f1/Editor/Data/Tools/UnityYAMLMerge merge -p "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
+	cmd = /home/tooster/Unity/Hub/Editor/2022.3.13f1/Editor/Data/Tools/UnityYAMLMerge merge -p "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
 [mergetool "meld"]
 	trustExitCode = false
 	cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
@@ -48,3 +48,5 @@
 	defaultBranch = master
 [gpg "ssh"]
 	allowedSignersFile = /home/tooster/.ssh/allowed_signers
+[rerere]
+	enabled = true

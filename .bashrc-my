@@ -24,9 +24,8 @@ export GPG_TTY=$(tty)
 . ~/.bashrc.d/todo.sh
 # . ~/.bashrc.d/conda.sh
 . ~/.bashrc.d/ferium.sh
-. ~/.bashrc.d/banner.sh
 
-# Add an "alert" alias for long running commands.  Use like so:
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -58,7 +57,7 @@ stty stop undef
 
 
 # LESS coloring. Will guess based on content if can't find lexer
-#export LESSOPEN="| pygmentize -gO style=monokai %s"
+export LESSOPEN="| pygmentize -gO style=monokai %s"
 export LESS=' -R --mouse --wheel-lines=3'
 
 # MAN COLORING
@@ -74,13 +73,13 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 # =============================================
 #
 
-# setup NODE
+# mount AVFS
+mountavfs
+
+#setup NODE
 export N_PREFIX="$HOME/.n"
 export PATH=$N_PREFIX/bin:$PATH
 export NODE_PATH=$N_PREFIX/bin
-
-# setup NEOVIM
-export PATH="$PATH:/opt/nvim-linux64/bin"
 
 ## GLOBAL NODE MODULES HAVE TO BE USEDAFTER N SETUP
 
@@ -99,7 +98,7 @@ eval "$(github-copilot-cli alias -- "$0")"
 # fi
 # zoxide instead of autojump
 
-command -v zoxide &> /dev/null && eval "$(zoxide init bash)"
+command -v zoxide &> /dev/null && eval "$($HOME/.local/bin/zoxide init bash)"
 
 # RUST - cargo
 if [ -d "$HOME/.cargo/" ]; then
@@ -113,8 +112,8 @@ if [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]]; then
 fi
 
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
