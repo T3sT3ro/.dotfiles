@@ -1,5 +1,5 @@
 {
-  "current": 8,
+  "current": 12,
   "tips": [
     "You can use fzf's `Ctr-t` to fuzzy search files, `Alt-c` to fuzzy cd into directory and use `<TAB>` in fzf to select multiple files. Smart fzf completion can be triggered by writing `**` and triggering `<TAB>`",
     "`bat` can be used instead of `cat`",
