@@ -20,11 +20,11 @@ export GPG_TTY=$(tty)
 . ~/.bashrc.d/dotfiles.sh
 . ~/.bashrc.d/aliases.sh
 . ~/.bashrc.d/tmux.sh
-. ~/.bashrc.d/prompt.sh
 . ~/.bashrc.d/todo.sh
 # . ~/.bashrc.d/conda.sh
 . ~/.bashrc.d/ferium.sh
 . ~/.bashrc.d/banner.sh
+. ~/.bashrc.d/prompt.sh
 
 # Add an "alert" alias for long running commands.  Use like so:
 # don't put duplicate lines or lines starting with space in the history.
@@ -88,7 +88,7 @@ export PATH="$PATH:/opt/nvim-linux64/bin"
 [[ -f /usr/bin/gh ]] && eval "$(gh completion -s bash)"
 
 # github copilot cli
-eval "$(github-copilot-cli alias -- "$0")"
+# eval "$(github-copilot-cli alias -- "$0")"
 
 # tldr completion
 [ -f ~/.tldr-completion.bash ] && source ~/.tldr-completion.bash
@@ -99,7 +99,7 @@ eval "$(github-copilot-cli alias -- "$0")"
 # fi
 # zoxide instead of autojump
 
-command -v zoxide &> /dev/null && eval "$(zoxide init bash)"
+command -v zoxide >/dev/null && eval "$(zoxide init bash)"
 
 # RUST - cargo
 if [ -d "$HOME/.cargo/" ]; then

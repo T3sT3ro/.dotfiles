@@ -1,10 +1,12 @@
+include "%L"
+
 # almost equal
 <Multi_key> <asciitilde> <equal> : "≅" U2245 # APPROXIMATELY OR ACTUALLY EQUAL TO
 <Multi_key> <equal> <asciitilde> : "≅" U2245 # APPROXIMATELY OR ACTUALLY EQUAL TO
 <Multi_key> <asciitilde> <asciitilde> : "≈" U2248 # ALMOST EQUAL TO
 
 # emoji
-<Multi_key> <E> <s> : "¯\_(ツ)_/¯"      # shrug
+<Multi_key> <E> <s> : "¯\\_(ツ)_/¯"     # shrug
 <Multi_key> <E> <t> : "(╯°□°）╯︵ ┻━┻"  # tableflip
 <Multi_key> <E> <l> : "( ͡° ͜ʖ ͡°)"        # lenny
 
@@ -31,6 +33,7 @@
 <Multi_key> <G> <F> : "Φ"    U03A6    # GREEK CAPITAL LETTER PHI
 <Multi_key> <G> <X> : "Χ"    U03A7    # GREEK CAPITAL LETTER CHI
 <Multi_key> <G> <O> : "Ω"    U03A9    # GREEK CAPITAL LETTER OMEGA
+
 
 # DOUBLES (additional stroke <Q>)
 <Multi_key> <G> <Q> <T> : "Θ"    U0398    # GREEK CAPITAL LETTER THETA

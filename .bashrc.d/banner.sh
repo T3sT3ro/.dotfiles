@@ -1,1 +1,2 @@
+eval $(tips completions)
 tips

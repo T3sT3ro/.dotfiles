@@ -9,103 +9,156 @@
 # requirements:
 # - jq - for tips database (json) management
 # - sponge (from `moreutils` package) - for updating file
-# - gum - for nice prompt: https://github.com/charmbracelet/gum
-# - glow - for nice markdown output (can be adapted to use `gum format` alone instead of `glow`): https://github.com/charmbracelet/glow
+# recommended:
+# - gum - for nice prompting and markdown printing (glow not needed when using `gum format`) :https://github.com/charmbracelet/gum
+# - glow - for nice markdown printing: https://github.com/charmbracelet/glow
 #
 # for now, not strictly following https://clig.dev/
 
+if [[ $1 == "completions" ]]; then
+  echo 'complete -W "all n next c current p previous stats remote-add import-remotes fetch upgrade completions help" tips'
+  exit 0;
+fi;
+
 HELP="\
 Utility for printing and managing helpful tips in the terminal,
-similar to IDEs tips shown on startup. For use in startup script.
-Uses tips database at 'TIPS_DB' (defaults to '~/.config/tips.json').
+similar to IDEs' tips shown on startup. For use in startup script.
+Can fetch new tips from web and add remotes. Data stored by default in '~/.local/share/tips/'.
 
-<number>                print zero-indexed nth tip
--p --previous           move to and print previous tip
--n --next               (default) move to and print next tip
--c --current            print current tip, don't move
-   --add                prompt and append new tip to db
-   --import             add all tips from one db (read from STDIN) to your db
-   --db                 prints the database location
-   --stats              prints the tips database stats
-   --add-remote <url>   adds repo (url to tips.json db in remote)
-   --fetch              fetches and adds tips from repos to local json db
-   --upgrade            upgrades tips utility (overwrites current installation in .local/bin/tips)
--h -?                   print this message"
+Usage: 
+  tips [arguments]
+
+Arguments:
+  n, next (default)       move to and print next tip
+  c, current              print current tip
+  p, previous             move to and print previous tip
+  <number>                print n-th tip from current databse
+  all                     prints all tips
+  stats                   prints the tips database stats
+  remote-add <name> <url> add remote repository url for fetching tips
+  import-remotes <url>    import all remotes from url hosting remotes.json
+  fetch                   fetches tips from remotes in 'remotes' file, merges with current tips.db
+  upgrade                 upgrades tips utility (overwrites current installation in .local/bin/tips)
+  completions             generate completions
+  help, -h, -?            print this message"
 
 
 
-# if `tip` and `tips.json` are held in the same directory
-TIPS_DB="${TIPS_DB:-$HOME/.config/tips.json}"
+# configurable
+TIPS_DIR="${TIPS_DIR:-$HOME/.local/share/tips}"
+TIPS_FORMATTER=${TIPS_FORMATTER:-$(command -v gum >/dev/null && echo "gum format --theme=dark" || echo cat)}
+# fixed
+TIPS_DB="$TIPS_DIR/tips.json"
+TIPS_REMOTES="$TIPS_DIR/remotes.json"
+TIPS_CURRENT="$TIPS_DIR/current"
 TIPS_URL="https://gist.githubusercontent.com/T3sT3ro/bc06294f51091c0e34176c62683d538e"
 TIPS_UPGRADE_URL="$TIPS_URL/raw/tips"
 
-printAndMove() {
-  if [ ! -f "$TIPS_DB" ]; then echo "missing tips file: $TIPS_DB" >&2; exit 1; fi
-  offset=${1:-1}
-
-  read -r next text < <(jq -r --arg offset $offset '((.current + ($offset | tonumber)) % (.tips | length)) as $next | [$next, .tips[$next]] | @tsv' "$TIPS_DB")
-
-  printf "
-  # TIP #$(((next+1))):
-  $text" | glow -
-
-  jq --arg next $next '.current = ($next | tonumber)' "$TIPS_DB" | sponge "$TIPS_DB"
+# <prompt> <suffix in fallback> <default in fallback>
+promptConfirm() {
+  if command -v gum 2>&1 >/dev/null; then
+    gum confirm "$1"
+    return $?
+  fi
+  read -srn 1 -p "$1 $2 " yesno; echo;
+  [[ ${yesno:-$3} =~ [yY] ]];
+  return $?
 }
 
+# used with MOVE parameter will move to tips + $MOVE
+# used with TIP parameter will use this number instead of reading from 'current' file
+displayTip() {
+  SIZE=$(jq '. | length' "$TIPS_DB")
+
+  if [[ -z $TIP ]]; then
+    source "$TIPS_CURRENT"
+  else
+    CURRENT=$TIP
+  fi
+
+  if [[ $? -ne 0 || -z $SIZE ]]; then
+    echo "$0: missing file or invalid format: $TIPS_DB" >&2;
+    exit 2;
+  fi;
+
+  OFFSET=${MOVE:-0}
+  CURRENT=$((((CURRENT+OFFSET)%SIZE+SIZE)%SIZE))
+
+  [[ ! -z $MOVE ]] && declare -p CURRENT >"$TIPS_CURRENT"
+
+  jq -r --arg current $CURRENT '. as $tips | "# TIP #\($current):\n\($tips[$current | tonumber])"' "$TIPS_DB"
+}
+
+# legacy: unsorted unique entries:
+# .tips[] | [0].tips += .[1].tips | .[0] | .tips |= (map({key:.,value:1}) | from_entries | keys_unsorted)
+
 shopt -s extglob
-case "${1:--n}" in
-  -p|--previous) 
-    printAndMove -1
+SUBCOMMAND="${1:-next}"
+shift 1
+
+case "$SUBCOMMAND" in
+  p|previous) 
+    MOVE=-1; displayTip | $TIPS_FORMATTER
     ;;
-  -c|--current) 
-    printAndMove 0
+  c|current) 
+    MOVE=0;  displayTip | $TIPS_FORMATTER
     ;;
-  --add) 
-    TIP_TEXT=$(
-    gum write --show-cursor-line \
-      --header="# TIP $(jq '.tips | length' "$TIPS_DB"):" \
-      --placeholder "(Submit with Ctrl+D)" \
-      | jq -sR 'gsub("^\\s+|\\s+$"; "")'
-    )
-    jq ".tips += [$TIP_TEXT]" "$TIPS_DB" | sponge "$TIPS_DB"
-    ;;
-  --import)
-    jq -s '.[0].tips += .[1].tips | .[0] | .tips |= (map({key:.,value:1}) | from_entries | keys_unsorted)' "$TIPS_DB" - | sponge "$TIPS_DB"
-    ;;
-  -n|--next)
-    printAndMove 1
-    ;;
-  --db)
-    echo $TIPS_DB
-    ;;
-  --stats)
-    jq -r --arg location "$TIPS_DB" '"
-  db file: \($location)
-  entries: \(.tips | length)
-  current: \(.current)
-  remotes: \(.remotes | length)"' \
-  "$TIPS_DB"
+  n|next) 
+    MOVE=+1; displayTip | $TIPS_FORMATTER
     ;;
   ?([+-])+([[:digit:]]))
-    jq -r --arg i $1 '"# TIP #\($i | tonumber):\n\(.tips[$i | tonumber - 1])"' "$TIPS_DB" | glow
-     ;;
-  --add-remote)
-    if [ -z "$2" ]; then echo 'usage: tips --add-repo <url>' >&2; exit 1; fi;
-    jq --arg url "$2" '.remotes += [$url] | .remotes |= unique' "$TIPS_DB" | sponge "$TIPS_DB"
+    TIP=$SUBCOMMAND; displayTip | $TIPS_FORMATTER
     ;;
-  --fetch)
-    for URL in $(jq -r '.remotes[]' "$TIPS_DB"); do
-      curl $URL | tips --import
-    done
+  all)
+    jq -r '. | to_entries | map("# TIP #\(.key)\n\(.value)\n") | .[]' "$TIPS_DB" | $TIPS_FORMATTER
     ;;
-  --upgrade)
+
+  remote-add)
+    if [[ $# < 2 || -z $1 || -z $2 ]]; then
+      echo -e "usage: tips remote-add <name> <url to tips.json>" >&2
+      exit 1
+    fi;
+    
+    jq -s --arg name "$1" --arg url "$2" '(.[] // {}) + {($url): $name} ' "$TIPS_REMOTES" | sponge "$TIPS_REMOTES"
+    echo "Added '$1': '$2'"
+    echo "Run 'tips fetch' to downlaod tips."
+    ;;
+  import-remotes)
+    if [[ -z $1 ]]; then
+      echo -e "usage: tips import-remotes <url to remotes.json>" >&2
+      exit 1
+    fi;
+
+    { curl -f "$1"; cat remotes.json; } | jq -s 'add' | sponge "$TIPS_REMOTES";
+
+    echo >&2 "Imported all remotes. Run 'tips fetch' to downlaod tips."
+    ;;
+  fetch)
+    jq -r '. | to_entries | map([.key, .value] | @tsv)[]' "$TIPS_REMOTES" | 
+      while read -r URL NAME; do 
+        echo "Updating '$NAME': $URL" >&2; 
+        tput setaf 1 >&2
+        curl -fsS $URL
+        tput sgr0 >&2
+      done | 
+        jq -sr '. | flatten | unique' > "$TIPS_DB"
+    ;;
+
+  upgrade)
     TIPS_SH=$(which tips)
-    if [[ ! -f $TIPS_SH ]] || gum confirm "$TIPS_SH (script) already exists, overwrite with remote version?"; then
+    if [[ ! -f $TIPS_SH ]] || promptConfirm "Overwrite existing program '$TIPS_SH'? (y/N)"; then
       echo "Saving to $TIPS_SH..."
-      curl -o "$TIPS_SH" "$TIPS_UPGRADE_URL"
+      curl -fsSo "$TIPS_SH" "$TIPS_UPGRADE_URL"
     fi
     ;;
-  -h|-?|--help)
+
+  stats)
+    source "$TIPS_CURRENT"
+    echo "remotes: $(jq 'length' "$TIPS_REMOTES")"
+    echo "entries: $(jq 'length' "$TIPS_DB")"
+    echo "current: $CURRENT"
+    ;;
+  -h|-?|help|--help)
     echo "$HELP"
     ;;
   *) 

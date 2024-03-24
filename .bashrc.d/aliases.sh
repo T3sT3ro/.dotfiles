@@ -36,14 +36,11 @@ function webm2mp4() {
 
 function yesno() {
   PROMPT=${1:-"Confirm?"}
-  read -n 1 -p "$PROMPT (y/n)? " answer
+  read -srn 1 -p "$PROMPT (y/N)? " answer
+  echo
   case ${answer:0:1} in
-    y|Y )
-      return 0
-      ;;
-    * )
-      return 1
-      ;;
+    y|Y) return 0 ;;
+    *  ) return 1 ;;
   esac
 }
 

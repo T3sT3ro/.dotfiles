@@ -1,6 +1,11 @@
 #!/bin/bash
 # PROMPT settings
 
+# moved to using starhip instead of my custom, breaking prompt
+eval "$(starship init bash)"
+return
+# below won't be run
+
 . ~/.bashrc.d/promptrc
 # debians
 [ -f /usr/lib/git-core/git-sh-prompt ] && source /usr/lib/git-core/git-sh-prompt

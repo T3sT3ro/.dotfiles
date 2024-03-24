@@ -1,0 +1,25 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = false
+
+[git_metrics]
+disabled = false
+
+[username]
+disabled = false
+show_always = true
+style_user = 'bold green'
+
+[hostname]
+disabled = false
+
+[status]
+disabled = false
+symbol = ''
+
+[sudo]
+disabled = false
+style = 'bold red'
+symbol = 'SUDO '
