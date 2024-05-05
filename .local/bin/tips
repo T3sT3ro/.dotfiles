@@ -141,7 +141,12 @@ case "$SUBCOMMAND" in
         curl -fsS $URL
         tput sgr0 >&2
       done | 
-        jq -sr '. | flatten | unique' > "$TIPS_DB"
+        if output=$(set -o pipefail; jq -sr '. | flatten | unique'); then 
+          echo "$output" > "$TIPS_DB"
+          echo "Tips database updated" >&2
+        else
+          echo "Update aborted" >&2
+        fi
     ;;
 
   upgrade)
@@ -154,6 +159,7 @@ case "$SUBCOMMAND" in
 
   stats)
     source "$TIPS_CURRENT"
+    echo "databse: $TIPS_DB"
     echo "remotes: $(jq 'length' "$TIPS_REMOTES")"
     echo "entries: $(jq 'length' "$TIPS_DB")"
     echo "current: $CURRENT"

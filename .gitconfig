@@ -1,52 +1,64 @@
 [user]
-	email = 5300963+T3sT3ro@users.noreply.github.com
-	name = Tooster
-	signingKey = /home/tooster/.ssh/id_rsa.pub
+  email = 5300963+T3sT3ro@users.noreply.github.com
+  name = Tooster
+  signingKey = /home/tooster/.ssh/id_rsa.pub
 [alias]
-	dog = log --decorate --oneline --graph
-    adog = dog --all
-    dog2 = log --graph --pretty=format:'%C(auto)%<|(16)%h%Creset %C(dim green)%>|(18)%cr%Creset\t - %C(dim)%s %C(italic yellow)<%an>%Creset %C(auto)%d%Creset' --abbrev-commit
-    adog2 = dog2 --all
-    dog3 = log --all --graph --pretty=format:'%C(auto)%<|(20)%h%Creset %C(bold cyan)%cd%Creset %C(dim green)(%cr)%Creset %>|(74)%C(magenta)%G?%C(dim italic yellow) ~%cn%Creset %C(auto)%d%Creset %>|(80)%m %C(dim)%s' --abbrev-commit --date=format-local:'%d-%m-%Y %a %H:%M'
-    adog3 = dog3 --all
-	branch-name = "!git rev-parse --abbrev-ref HEAD"
-	seppuku = "!f(){ BNAME=$(git branch-name); git reset --hard origin/${BNAME}; }; f;"
-    publish = "!git push -u origin $(git branch-name)"
-    fixup="commit --amend --no-edit"
-    reword="commit --amend -m"
-    show-tracked="ls-tree -r master --name-only"
-    pull-all="pull --recurse-submodules"
-[merge]
-	tool = vscode
-[mergetool "vscode"]
-	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
-[mergetool "unity"]
-	trustExitCode = false
-	cmd = /home/tooster/Unity/Hub/Editor/2022.3.13f1/Editor/Data/Tools/UnityYAMLMerge merge -p "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
-[mergetool "meld"]
-	trustExitCode = false
-	cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
-[diff]
-	tool = vscode
-[difftool "vscode"]
-	cmd = code --wait --diff $LOCAL $REMOTE
-	
+  dog = log --decorate --oneline --graph
+  adog = dog --all
+  dog2 = log --graph --pretty=format:'%C(auto)%<|(16)%h%Creset %C(dim green)%>|(18)%cr%Creset\t - %C(dim)%s %C(italic yellow)<%an>%Creset %C(auto)%d%Creset' --abbrev-commit
+  adog2 = dog2 --all
+  dog3 = log --all --graph --pretty=format:'%C(auto)%<|(20)%h%Creset %C(bold cyan)%cd%Creset %C(dim green)(%cr)%Creset %>|(74)%C(magenta)%G?%C(dim italic yellow) ~%cn%Creset %C(auto)%d%Creset %>|(80)%m %C(dim)%s' --abbrev-commit --date=format-local:'%d-%m-%Y %a %H:%M'
+  adog3 = dog3 --all
+  branch-name = "!git rev-parse --abbrev-ref HEAD"
+  seppuku = "!f(){ BNAME=$(git branch-name); git reset --hard origin/${BNAME}; }; f;"
+  publish = "!git push -u origin $(git branch-name)"
+  fixup="commit --amend --no-edit"
+  reword="commit --amend -m"
+  show-tracked="ls-tree -r master --name-only"
+  pull-all="pull --recurse-submodules"
 
+[merge]
+  tool = vscode
+
+[mergetool "vscode"]
+  cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+[mergetool "unity"]
+  trustExitCode = false
+  cmd = /home/tooster/Unity/Hub/Editor/2022.3.13f1/Editor/Data/Tools/UnityYAMLMerge merge -p "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
+[mergetool "meld"]
+  trustExitCode = false
+  cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+
+[diff]
+  tool = difftastic
+  external = difft
+
+[difftool]
+  prompt = false
+
+[difftool "vscode"]
+  cmd = code --wait --diff $LOCAL $REMOTE
+[difftool "difftastic"]
+  cmd = difft "$LOCAL" "$REMOTE"
+
+[pager]
+  difftool = true
 [color]
-	ui = auto
+  ui = auto
+
 [core]
-	editor = vim
-	autocrlf = input
+  editor = nvim
+  autocrlf = input
 #    pager = "less -iXFR"
 [commit]
-	gpgsign = true
+  gpgsign = true
 [tag]
-    gpgsign = true
+  gpgsign = true
 [gpg]
-	format = ssh
+  format = ssh
 [init]
-	defaultBranch = master
+  defaultBranch = master
 [gpg "ssh"]
-	allowedSignersFile = /home/tooster/.ssh/allowed_signers
+  allowedSignersFile = /home/tooster/.ssh/allowed_signers
 [rerere]
-	enabled = true
+  enabled = true
