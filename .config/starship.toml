@@ -23,3 +23,7 @@ symbol = ''
 disabled = false
 style = 'bold red'
 symbol = 'SUDO '
+
+[conda]
+disabled = false
+ignore_base = false
