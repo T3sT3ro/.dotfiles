@@ -22,7 +22,6 @@ plugins=(
   zsh-autosuggestions
   zsh-syntax-highlighting
   rustup
-  zsh-bash-completions-fallback # to make existing bash completions work <https://github.com/3v1n0/zsh-bash-completions-fallback>
 )
 
 # config

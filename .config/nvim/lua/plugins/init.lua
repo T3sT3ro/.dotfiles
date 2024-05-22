@@ -42,9 +42,7 @@ return {
 	-- https://github.com/lambdalisue/suda.vim
 	{
 		"lambdalisue/suda.vim",
-		config = function()
-			require("suda").setup({})
-		end,
+    lazy = false
 	},
 
 	-- undo tree
