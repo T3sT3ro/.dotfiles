@@ -1,0 +1,20 @@
+[v1]
+"bat 0.24.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["bat"]
+"battop 0.2.4 (registry+https://github.com/rust-lang/crates.io-index)" = ["battop"]
+"bend-lang 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)" = ["bend"]
+"cargo-update 13.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = [
+    "cargo-install-update",
+    "cargo-install-update-config",
+]
+"csvlens 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["csvlens"]
+"difftastic 0.58.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["difft"]
+"fd-find 10.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["fd"]
+"ferium 4.4.1 (path+file:///home/tooster/workspace/ttr/minecraft/ferium)" = ["ferium"]
+"git-delta 0.17.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["delta"]
+"hvm 2.0.8 (registry+https://github.com/rust-lang/crates.io-index)" = ["hvm"]
+"just 1.26.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["just"]
+"lsd 1.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["lsd"]
+"ripgrep 14.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["rg"]
+"xsv 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["xsv"]
+"zellij 0.40.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["zellij"]
+"zoxide 0.9.4 (registry+https://github.com/rust-lang/crates.io-index)" = ["zoxide"]

@@ -18,10 +18,14 @@ plugins=(
   tmux
   vscode
   zoxide 
+
+  rust
+  fd
+  ripgrep
+
   # zsh-autocomplete # the history search is confusing and the terminal line jumps around
   zsh-autosuggestions
   zsh-syntax-highlighting
-  rustup
 )
 
 # config

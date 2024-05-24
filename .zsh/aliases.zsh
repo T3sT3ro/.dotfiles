@@ -44,5 +44,4 @@ alias preview="fzf --preview 'bat --color \"always\" {}'"
 alias gentmp='date +tmp+%Y%m%d%H%M%S'
 alias genpwd='cat /dev/urandom | tr -cd "3-9A-HJ-NP-Z" | head -c 32'
 
-
 alias man=better_man #'if (( $(tput cols) <= 130 )); then MANWIDTH=$( (( $(tput cols) <= 130 )) && echo $(tput cols) || echo 120) man'

@@ -4,6 +4,7 @@
 # Inserts a blank line between shell prompts
 add_newline = false
 
+
 [git_metrics]
 disabled = false
 
@@ -18,6 +19,7 @@ disabled = false
 [status]
 disabled = false
 symbol = ''
+pipestatus = true
 
 [sudo]
 disabled = false

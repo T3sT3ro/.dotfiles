@@ -34,3 +34,8 @@ dotfiles-seppuku() {
 }
 
 compdef dotfiles='git'
+
+avfspath() {
+  echo -n "$HOME/.avfs$(realpath $1)"
+}
+
