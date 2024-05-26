@@ -46,8 +46,8 @@ zstyle ':autocomplete:history-search-backward:*' list-lines $SAVEHIST
 
 # -----------------------------------------
 
-# Enable vim mode with ESC
-bindkey -v
+# Enable vim mode with ESC - for now disabled, because it doesn't play nicely with ALT+.
+# bindkey -v
 
 # setup NODE
 export N_PREFIX="$HOME/.n"

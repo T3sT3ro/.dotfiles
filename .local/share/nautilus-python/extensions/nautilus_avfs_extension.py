@@ -31,7 +31,7 @@ class AVFSNautilusExtension(GObject.GObject, Nautilus.MenuProvider):
         self.mime_handlers = {
             
             # specializations from avfs modules
-            'application/x-bzip-compressed-tar':    '#',            #tar.bz2
+            'application/x-bzip-compressed-tar':    '#',            #.tar.bz2
             'application/x-compressed-tar':         '#ugz#utar',    #.tar.gz
             'application/x-xz-compressed-tar':      '#uxz#utar',    #.tar.xz
             
@@ -43,48 +43,21 @@ class AVFSNautilusExtension(GObject.GObject, Nautilus.MenuProvider):
             # extra modules defined in defined in /usr/share/avfs/extfs/
 
             'application/x-7z-compressed':          '#u7z',         #.7z
-                                                                    #apt
-                                                                    #audio
-                                                                    #bpp
-            'application/vnd.debian.binary-package': '#deb',        #deb
-                                                                    #deba
-                                                                    #debd
-                                                                    #dpkg
-                                                                    #extfs.ini
-                                                                    #ftplist
-                                                                    #hp48
-                                                                    #lslR
-                                                                    #mailfs
-                                                                    #patchfs
-            'application/x-redhat-package-manager': '#rpm',         #rpm
-                                                                    #rpms
-                                                                    #trpm
-                                                                    #u7z
-                                                                    #uace
-                                                                    #uadf
-                                                                    #uar
-                                                                    #uarc
-                                                                    #uarj
-                                                                    #uc1541
+            'application/vnd.debian.binary-package':'#deb',         #.deb
+            'application/x-redhat-package-manager': '#rpm',         #.rpm
             'application/vnd.ms-cab-compressed':    '#ucab',        #.cab
             'application/x-cpio':                   '#ucpio',       #.cpio
-                                                                    #udar
-                                                                    #uextrar
-                                                                    #uha
-                                                                    #uimg
-                                                                    #ulha
-                                                                    #upp
-                                                                    #uxdms
-                                                                    #uxpk
-                                                                    #uzip
-                                                                    #uzoo
-
+            'application/x-lha':                    '#ulha',        #.lha <-- for some reason not working in avfs
+            'application/x-zoo':                    '#uzoo',        #.zoo
             'application/vnd.comicbook-rar':        '#urar',        #.cbr
 
             # catch-alls
 
-            'application/x-tar':                    '#utar',        #.tar
+            'application/x-tar':                    '#utar',        #.tar / catch all tar
             'application/zip':                      '#uzip',        # catch all zip
+
+            # modules present in avfs that have been omitted:
+            # apt ,audio ,bpp ,extfs.ini ,ftplist ,hp48 ,lslR ,mailfs ,patchfs ,uace ,uadf ,uar ,uarc ,uarj ,uc1541 ,udar ,uextrar ,uha ,uimg ,upp ,uxdms ,uxpk
         }
 
     def mount_and_open_with_avfs(self, menu, file):
