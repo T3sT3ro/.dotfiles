@@ -31,7 +31,7 @@ class AVFSNautilusExtension(GObject.GObject, Nautilus.MenuProvider):
         self.mime_handlers = {
             
             # specializations from avfs modules
-            'application/x-bzip-compressed-tar':    '#bz2#utar',    #tar.bz2
+            'application/x-bzip-compressed-tar':    '#',            #tar.bz2
             'application/x-compressed-tar':         '#ugz#utar',    #.tar.gz
             'application/x-xz-compressed-tar':      '#uxz#utar',    #.tar.xz
             
@@ -43,22 +43,20 @@ class AVFSNautilusExtension(GObject.GObject, Nautilus.MenuProvider):
             # extra modules defined in defined in /usr/share/avfs/extfs/
 
             'application/x-7z-compressed':          '#u7z',         #.7z
-            'application/':                         '#uar#utar',    #a
                                                                     #apt
                                                                     #audio
                                                                     #bpp
-                                                                    #deb
+            'application/vnd.debian.binary-package': '#deb',        #deb
                                                                     #deba
                                                                     #debd
                                                                     #dpkg
                                                                     #extfs.ini
                                                                     #ftplist
                                                                     #hp48
-                                                                    #iso9660
                                                                     #lslR
                                                                     #mailfs
                                                                     #patchfs
-                                                                    #rpm
+            'application/x-redhat-package-manager': '#rpm',         #rpm
                                                                     #rpms
                                                                     #trpm
                                                                     #u7z
@@ -68,8 +66,8 @@ class AVFSNautilusExtension(GObject.GObject, Nautilus.MenuProvider):
                                                                     #uarc
                                                                     #uarj
                                                                     #uc1541
-            'application/vnd.ms-cab-compressed':    '#ucab',        #ucab
-                                                                    #ucpio
+            'application/vnd.ms-cab-compressed':    '#ucab',        #.cab
+            'application/x-cpio':                   '#ucpio',       #.cpio
                                                                     #udar
                                                                     #uextrar
                                                                     #uha
@@ -80,6 +78,8 @@ class AVFSNautilusExtension(GObject.GObject, Nautilus.MenuProvider):
                                                                     #uxpk
                                                                     #uzip
                                                                     #uzoo
+
+            'application/vnd.comicbook-rar':        '#urar',        #.cbr
 
             # catch-alls
 
