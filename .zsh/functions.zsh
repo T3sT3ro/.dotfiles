@@ -17,16 +17,6 @@ better_man() {
 }
 
 
-# alias to manage dotfiles.
-dotfiles() {
-    git --git-dir=$HOME/.dotfiles --work-tree=$HOME "$@"
-}
-
-
-# alias to manage dotfiles.
-lazydotfiles() {
-    lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME "$@"
-}
 
 dotfiles-seppuku() {
     dotfiles checkout -f
