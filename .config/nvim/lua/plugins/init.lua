@@ -86,4 +86,8 @@ return {
 			require("telescope").load_extension("undo")
 		end,
 	},
+	{
+		"Exafunction/codeium.vim",
+		event = "BufEnter",
+	},
 }
