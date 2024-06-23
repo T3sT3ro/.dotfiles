@@ -29,3 +29,6 @@ avfspath() {
   echo -n "$HOME/.avfs$(realpath $1)"
 }
 
+batdiff() {
+    git diff --name-only --relative --diff-filter=d | xargs bat --diff
+}

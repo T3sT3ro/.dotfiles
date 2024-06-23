@@ -29,3 +29,6 @@ symbol = 'SUDO '
 [conda]
 disabled = false
 ignore_base = false
+
+[battery]
+disabled = true

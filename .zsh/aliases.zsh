@@ -14,12 +14,12 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # some more ls aliases
-alias ls='lsd' # better ls
-alias ll='ls -lF'
-alias la='ls -A'
-alias lla='ls -al'
-alias l='ls -F -1'
-alias lt='ls --tree'
+alias ll='lsd -lF' # long format
+alias la='lsd -A' # all, including hidden
+alias lla='lsd -al' # long list
+alias l='lsd -F -1' # one column simple
+alias lst='lsd --tree' # tree
+alias lls='lsd -AlFbhv --color=always | less -XER'
 
 # lls() {
 #   /bin/ls -AlFbhv --color=always "$@" | less -XER
