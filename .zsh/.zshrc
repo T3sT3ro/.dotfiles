@@ -13,6 +13,8 @@ setopt histignorealldups sharehistory
 
 # -----------------------------------------
 
+path+=("$HOME/.local/bin")
+
 #dump .compdump files to ohmyzsh/cache
 export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
 

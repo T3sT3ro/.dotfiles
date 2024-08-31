@@ -138,7 +138,7 @@ case "$SUBCOMMAND" in
       while read -r URL NAME; do 
         echo "Updating '$NAME': $URL" >&2; 
         tput setaf 1 >&2
-        curl -fsS $URL
+        curl -fsS "$URL?r=$RAND" # random parameter to mitigate caching issues on CDN such as gist.github.com
         tput sgr0 >&2
       done | 
         if output=$(set -o pipefail; jq -sr '. | flatten | unique'); then 

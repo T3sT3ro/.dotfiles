@@ -20,8 +20,8 @@ plugins=(
   zoxide 
 
   rust
-  fd
-  ripgrep
+ # fd
+ # ripgrep
 
   # zsh-autocomplete # the history search is confusing and the terminal line jumps around
   zsh-autosuggestions

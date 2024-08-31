@@ -89,4 +89,9 @@ return {
 		"Exafunction/codeium.vim",
 		event = "BufEnter",
 	},
+  {
+    "akinsho/git-conflict.nvim",
+    version = "*",
+    config = true,
+  }
 }
