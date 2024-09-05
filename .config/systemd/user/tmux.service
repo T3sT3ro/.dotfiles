@@ -1,0 +1,12 @@
+[Unit]
+Description=tmux session for user %I
+Documentation=man:tmux(1)
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/tmux new-session -s %I -d
+ExecStop=/usr/bin/tmux kill-session -t %I
+
+[Install]
+WantedBy=graphical-session.target
+After=graphical-session.target
