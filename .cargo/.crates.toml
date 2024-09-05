@@ -14,6 +14,7 @@
 "hvm 2.0.21 (registry+https://github.com/rust-lang/crates.io-index)" = ["hvm"]
 "just 1.31.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["just"]
 "lsd 1.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = ["lsd"]
+"nu 0.97.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["nu"]
 "ripgrep 14.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["rg"]
 "sd 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["sd"]
 "xsv 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["xsv"]
