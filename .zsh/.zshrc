@@ -39,13 +39,6 @@ compinit
 # run tips to show banner
 tips
 
-# source oh-my-zsh
-source $ZDOTDIR/omz.zsh
-# Autocompletion
-zstyle -e ':autocomplete:list-choices:*' list-lines 'reply=( 10 )'
-# History menu.
-zstyle ':autocomplete:history-search-backward:*' list-lines $SAVEHIST
-
 # -----------------------------------------
 
 # Enable vim mode with ESC - for now disabled, because it doesn't play nicely with ALT+.
@@ -97,5 +90,12 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+
+# source oh-my-zsh
+source $ZDOTDIR/omz.zsh
+# Autocompletion
+zstyle -e ':autocomplete:list-choices:*' list-lines 'reply=( 10 )'
+# History menu.
+zstyle ':autocomplete:history-search-backward:*' list-lines $SAVEHIST
 
 [[ $PROF -eq 1 ]] && zprof
