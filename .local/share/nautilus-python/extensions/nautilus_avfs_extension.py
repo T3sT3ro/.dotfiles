@@ -20,6 +20,8 @@
 
 import os
 import subprocess
+import gi
+gi.require_version('Gtk', '4.0')
 from gi.repository import Nautilus, GObject
 
 class AVFSNautilusExtension(GObject.GObject, Nautilus.MenuProvider):
@@ -84,7 +86,7 @@ class AVFSNautilusExtension(GObject.GObject, Nautilus.MenuProvider):
                 return handler
         return '#'
 
-    def get_file_items(self, window, files):
+    def get_file_items(self, files):
         # Only add the menu item if one file is selected
         if len(files) != 1:
             return

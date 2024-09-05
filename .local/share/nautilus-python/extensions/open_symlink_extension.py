@@ -2,13 +2,15 @@
 
 import os
 import subprocess
+import gi
+gi.require_version('Gtk', '4.0')
 from gi.repository import Nautilus, GObject, Gtk
 
 class GoToLinkLocationExtension(GObject.GObject, Nautilus.MenuProvider):
     def __init__(self):
         GObject.Object.__init__(self)
 
-    def get_file_items(self, window, files):
+    def get_file_items(self, files):
         # Check if exactly one file is selected
         if len(files) != 1:
             return
