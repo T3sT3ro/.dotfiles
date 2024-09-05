@@ -32,3 +32,6 @@ ignore_base = false
 
 [battery]
 disabled = true
+
+[shell]
+disabled = false
