@@ -62,3 +62,5 @@
   allowedSignersFile = /home/tooster/.ssh/allowed_signers
 [rerere]
   enabled = true
+[pull]
+	rebase = true
