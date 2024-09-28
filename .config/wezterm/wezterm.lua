@@ -11,6 +11,6 @@ config.window_padding = {
 
 config.font = wezterm.font 'JetBrains Mono'
 config.window_decorations = "RESIZE"
-config.window_background_opacity = 0.80
+config.window_background_opacity = 0.90
 
 return config
