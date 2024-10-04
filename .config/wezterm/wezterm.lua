@@ -1,5 +1,6 @@
 local wezterm = require 'wezterm'
-local config = {}
+local config = wezterm.config_builder()
+local act = wezterm.action
 
 config.color_scheme = "Catppuccin Mocha"
 config.window_padding = {
@@ -9,8 +10,42 @@ config.window_padding = {
   bottom = 0
 }
 
+config.initial_cols = 140
+config.initial_rows = 36
+
+config.window_frame = {
+  border_left_width = '1px',
+  border_right_width = '1px',
+  border_bottom_height = '1px',
+  border_top_height = '1px',
+  border_left_color = '#2e2e2e',
+  border_right_color = '#2e2e2e',
+  border_bottom_color = '#2e2e2e',
+  border_top_color = '#2e2e2e',
+}
+
+config.font_size = 10
 config.font = wezterm.font 'JetBrains Mono'
-config.window_decorations = "RESIZE"
 config.window_background_opacity = 0.90
+config.window_decorations = "INTEGRATED_BUTTONS|RESIZE" -- use INTEGRATED_BUTTONS when linux fixes their shit
+config.enable_scroll_bar = true
+config.scrollback_lines = 10000
+config.inactive_pane_hsb = {
+  saturation = 0.9,
+  brightness = 0.9
+}
+
+config.leader = { key = '/', mods = 'CTRL', timeout_milliseconds = 1000 }
+
+config.keys = {
+  -- send C-a on double C-a
+  { key = '/', mods = 'LEADER|CTRL',
+    action = act.SendKey { key = '/', mods = 'CTRL' }
+  },
+
+  { key = 'h', mods = 'LEADER', action = act.SplitHorizontal },
+  { key = 'v', mods = 'LEADER', action = act.SplitVertical },
+  { key = 'q', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true }}
+}
 
 return config
