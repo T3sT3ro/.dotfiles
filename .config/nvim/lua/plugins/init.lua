@@ -9,7 +9,16 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		opts = {
+      highligh = { enable = true },
+      indent = { enable = true },
 			ensure_installed = { "html", "css", "bash", "lua" },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          node_incremental = "v",
+          node_decremental = "V",
+        },
+      }
 		},
 	},
 
