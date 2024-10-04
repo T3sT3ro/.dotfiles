@@ -12,6 +12,8 @@ HISTFILE=$ZDOTDIR/.zsh_history
 setopt histignorealldups sharehistory
 
 # -----------------------------------------
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/home/tooster/.zsh/completions:"* ]]; then export FPATH="/home/tooster/.zsh/completions:$FPATH"; fi
 
 path+=("$HOME/.local/bin")
 
@@ -74,6 +76,7 @@ eval "$(starship init zsh)"
 # Generated for envman. Do not edit.
 [[ -s "$HOME/.config/envman/load.sh" ]] && . "$HOME/.config/envman/load.sh"
 
+. "/home/tooster/.deno/env"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
