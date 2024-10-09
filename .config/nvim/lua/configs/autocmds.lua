@@ -1,9 +1,12 @@
+-- auto decrypt and encrypt files by prompting for password
 local gpgGroup = vim.api.nvim_create_augroup('customGpg', { clear = true })
 
 -- autocmds execute in the order in which they were defined.
 -- https://neovim.io/doc/user/autocmd.html#autocmd-define
 
-vim.api.nvim_create_autocmd({ 'BufReadPre', 'FileReadPre' }, {
+local autocmd = vim.api.nvim_create_autocmd
+
+autocmd({ 'BufReadPre', 'FileReadPre' }, {
     pattern = '*.gpg',
     group = gpgGroup,
     callback = function ()
@@ -18,7 +21,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'FileReadPre' }, {
     end
 })
 
-vim.api.nvim_create_autocmd({ 'BufReadPost', 'FileReadPost' }, {
+autocmd({ 'BufReadPost', 'FileReadPost' }, {
     pattern = '*.gpg',
     group = gpgGroup,
     callback = function ()
@@ -33,15 +36,31 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'FileReadPost' }, {
 })
 
 -- Convert all text to encrypted text before writing
-vim.api.nvim_create_autocmd({ 'BufWritePre', 'FileWritePre' }, {
+autocmd({ 'BufWritePre', 'FileWritePre' }, {
     pattern = '*.gpg',
     group = gpgGroup,
     command = "'[,']!gpg --default-recipient-self -ae 2>/dev/null",
 })
 -- Undo the encryption so we are back in the normal text, directly
 -- after the file has been written.
-vim.api.nvim_create_autocmd({ 'BufWritePost', 'FileWritePost' }, {
+autocmd({ 'BufWritePost', 'FileWritePost' }, {
     pattern = '*.gpg',
     group = gpgGroup,
     command = 'u'
+})
+
+-- restore last cursor position, from https://nvchad.com/docs/recipes
+autocmd("BufReadPost", {
+  pattern = "*",
+  callback = function()
+    local line = vim.fn.line "'\""
+    if
+      line > 1
+      and line <= vim.fn.line "$"
+      and vim.bo.filetype ~= "commit"
+      and vim.fn.index({ "xxd", "gitrebase" }, vim.bo.filetype) == -1
+    then
+      vim.cmd 'normal! g`"'
+    end
+  end,
 })
