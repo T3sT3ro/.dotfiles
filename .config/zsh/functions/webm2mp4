@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+#webm2mp4() {
+ffmpeg -i "$1" "${1%.webm}.mp4"
+#}

@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+# # MAN sizing of maxwidth 120 for terminals bigger than 120
+#better_man() {
+  if (( $(tput cols) <= 130 )); then
+    /usr/bin/man $@
+  else
+    MANWIDTH=120 /usr/bin/man $@
+  fi
+#}

@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+#avfspath() {
+echo -n "$HOME/.avfs$(realpath $1)"
+#}

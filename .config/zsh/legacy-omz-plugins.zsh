@@ -27,8 +27,3 @@ plugins=(
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
-
-# config
-#
-# to fix fzf vs zsh-autocomplete in `kill` problem
-zstyle ':autocomplete:tab:*' completion fzf

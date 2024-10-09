@@ -1,0 +1,95 @@
+#!/bin/zsh
+
+# .zsh_plugins.txt - antidote plugins file
+
+# zsh-users/zsh-completions is a popular plugin for adding supplemental completions.
+# We combine the `path:` and `kind:fpath` annotations here:
+zsh-users/zsh-completions path:src kind:fpath
+
+# This is the recommended plugin for handling compinit and setting completion zstyles.
+# It's designed to handle all the complexity of the Zsh completion system so the user
+# doesn't have to.
+mattmc3/ez-compinit
+
+# There are also other plugins that handle completions if you prefer something else.
+# However, ez-compinit is highly recommended, and was built by the author of antidote.
+#
+# If you want to use the belak/zsh-utils completion plugin to run your compinit, this
+# plugin is meant to be run near the END of your .zsh_plugins.txt file after fpath is
+# fully populated.
+# belak/zsh-utils path:completion
+
+### Regular Plugins
+#
+# Plugins are the simplest kind of bundles. You can point to a full git URL, or if you
+# assume GitHub.com, then you can use the user/repo shorthand.
+#
+###
+
+### for 'up <n>' instead of 'cd ....'
+https://github.com/peterhurford/up.zsh
+### fzf finder for zsh manual
+mattmc3/zman
+### zoxide integration
+z-shell/zsh-zoxide
+
+### Local Plugins
+#
+# Plugins don't have to come from GitHub. You can also use local files or directories to
+# host your own custom plugins.
+#
+###
+$ZDOTDIR/.aliases
+#$ZDOTDIR/custom/plugins/example
+
+### Utilities
+#
+# Utilities aren't traditional Zsh plugins - they aren't sourced Zsh scripts. Instead
+# they provide commands that can be executed from your terminal session.
+
+romkatv/zsh-bench kind:path
+
+getantidote/use-omz
+ohmyzsh/ohmyzsh path:lib/clipboard.zsh
+ohmyzsh/ohmyzsh path:lib/theme-and-appearance.zsh
+ohmyzsh/ohmyzsh path:plugins/colored-man-pages
+ohmyzsh/ohmyzsh path:plugins/command-not-found
+ohmyzsh/ohmyzsh path:plugins/copybuffer
+ohmyzsh/ohmyzsh path:plugins/copyfile
+ohmyzsh/ohmyzsh path:plugins/copypath
+ohmyzsh/ohmyzsh path:plugins/extract
+ohmyzsh/ohmyzsh path:plugins/magic-enter
+ohmyzsh/ohmyzsh path:plugins/fancy-ctrl-z
+
+### Framework: zsh-utils
+#
+# zsh-utils is a micro-framework that is also well suited to pair with antidote. It
+# provides much of the same core functionality from other bigger frameworks without the
+# bloat or performance hit. Using zsh-utils, you may find you don't need much else.
+# If you want a really thin framework, this is great.
+#
+###
+belak/zsh-utils path:history
+belak/zsh-utils path:utility
+#belak/zsh-utils path:editor
+
+
+### Deferred Plugins
+#
+# Antidote allows you to defer loading plugins. This is similar to concepts like "turbo
+# mode" in other plugin managers. Antidote handles deferring plugins by leveraging
+# romkatv/zsh-defer, which "defers execution of a zsh command until zsh has nothing else
+# to do and is waiting for user input". In general, you should not defer plugins unless
+# you know for sure they properly support deferred loading, and there are no adverse
+# side-effects (see: https://github.com/romkatv/zsh-defer#Caveats). However, for
+# certain plugins, this can greatly increase your zsh startup speed.
+#
+###
+
+# Syntax highlighting
+#zsh-users/zsh-syntax-highlighting kind:defer
+zdharma-continuum/fast-syntax-highlighting kind:defer
+
+# These popular core plugins should be loaded at the end
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-history-substring-search

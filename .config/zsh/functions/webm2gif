@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+#webm2gif() {
+ffmpeg -i "$1" "${1%.webm}.gif"
+#}
