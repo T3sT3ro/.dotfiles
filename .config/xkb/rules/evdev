@@ -1,0 +1,4 @@
+! option = symbols
+  custom:f13_caps = +custom(f13_caps)
+
+! include %S/evdev

@@ -1,0 +1,8 @@
+partial alphanumeric_keys
+xkb_symbols "f13_caps" {
+    key <CAPS> {
+        type[Group1] = "TWO_LEVEL",
+        symbols[Group1] = [ F13, Caps_Lock ],
+        actions[Group1] = [ NoAction(), LockMods(modifiers=Lock) ]
+    };
+};
