@@ -50,6 +50,7 @@ $ZDOTDIR/.aliases
 romkatv/zsh-bench kind:path
 
 getantidote/use-omz
+ohmyzsh/ohmyzsh path:lib/key-bindings.zsh
 ohmyzsh/ohmyzsh path:lib/clipboard.zsh
 ohmyzsh/ohmyzsh path:lib/theme-and-appearance.zsh
 ohmyzsh/ohmyzsh path:plugins/colored-man-pages

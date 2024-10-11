@@ -11,6 +11,7 @@ source $ZDOTDIR/.aliases
 export PATH="$HOME/.cache/antidote/romkatv/zsh-bench:$PATH"
 fpath+=( $HOME/.cache/antidote/getantidote/use-omz )
 source $HOME/.cache/antidote/getantidote/use-omz/use-omz.plugin.zsh
+source $HOME/.cache/antidote/ohmyzsh/ohmyzsh/lib/key-bindings.zsh
 source $HOME/.cache/antidote/ohmyzsh/ohmyzsh/lib/clipboard.zsh
 source $HOME/.cache/antidote/ohmyzsh/ohmyzsh/lib/theme-and-appearance.zsh
 fpath+=( $HOME/.cache/antidote/ohmyzsh/ohmyzsh/plugins/colored-man-pages )
