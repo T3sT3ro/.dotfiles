@@ -35,13 +35,12 @@ antidote load ${ZDOTDIR:-$HOME}/.zsh_antidote_plugins
 
 # -----------------------------------------
 
+function refreshCompletion() {
+    # in red
+    # echo $(tput setaf 1)Refreshing $1 completions...$(tput sgr0)
+    # if command doesn't exist  
+    (( $+commands[$1] )) || return 0
 
-# Add deno completions to search path
-if [[ ":$FPATH:" != *":$COMPLETIONS_DIR:"* ]]; then 
-    export FPATH="$COMPLETIONS_DIR:$FPATH"; 
-fi
-
-function completionsStaleOrMissing() {
     # if file does not exist
     if [ ! -f "$COMPLETIONS_DIR/_$1" ]; then
         return 0
@@ -50,18 +49,26 @@ function completionsStaleOrMissing() {
     if [[ $(find "$COMPLETIONS_DIR/_$1" -mtime +7) ]]; then
         return 0
     fi
+
+    # if COMPLETE_FOR was specified, use it (e.g. COMPLETE_FOR=cargo refreshCompletion rustup completions zsh cargo)
+    #
+    $@ > "$COMPLETIONS_DIR/${COMPLETE_FOR:-_${1}}"
+    
     return 1
 }
 
+# -----------------------------------------
 # starship
-(( $+commands[starship] )) && completionsStaleOrMissing starship && starship completions zsh > "$COMPLETIONS_DIR/_starship"
+refreshCompletion starship completions zsh
 
-# just
-(( $+commands[just] )) && completionsStaleOrMissing just && just --completions zsh > "$COMPLETIONS_DIR/_just"
+refreshCompletion just --completions zsh
 
 # rust
-(( $+commands[rustup] )) && completionsStaleOrMissing rustup && rustup completions zsh > "$COMPLETIONS_DIR/_rustup"
-(( $+commands[rustup] )) && completionsStaleOrMissing cargo && rustup completions zsh cargo > "$COMPLETIONS_DIR/_cargo"
+COMPLETE_FOR=rustup refreshCompletion rustup completions zsh
+COMPLETE_FOR=cargo refreshCompletion rustup completions zsh cargo
+
+# ripgrep
+# COMPLETE_FOR=rg rg --generate=complete-zsh
 
 
 # -----------------------------------------

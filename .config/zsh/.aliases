@@ -12,10 +12,6 @@ alias ll='ls -lh'
 alias la='ls -lAh'
 alias ldot='ls -ld .*'
 
-# fix common typos
-alias quit='exit'
-alias cd..='cd ..'
-
 # tar
 alias tarls="tar -tvf"
 alias untar="tar -xf"
