@@ -28,6 +28,9 @@ fi
 # tooster
 # -----------------------------------------------------------------
 
+# configure custom keyboard with xkb
+# setxkbmap -print | sed -e '/xkb_symbols/s/"[[:space:]]/+custom(f13_caps)&/' | xkbcomp -I"${HOME}"/.config/xkb - "$DISPLAY"
+
 if [ -d "$HOME/.cargo/" ] ; then
     . "$HOME/.cargo/env"
 fi
@@ -36,7 +39,5 @@ fi
 # Added by Toolbox App
 export PATH="$PATH:/home/tooster/.local/share/JetBrains/Toolbox/scripts"
 
-# Generated for envman. Do not edit.
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-
+# deno
 . "/home/tooster/.deno/env"
