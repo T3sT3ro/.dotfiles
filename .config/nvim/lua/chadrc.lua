@@ -6,11 +6,11 @@
 local M = {
   base46 = {
     theme = "vscode_dark",
-    options = {
-      transparent_background = true
-    }
   },
 
+  cheatsheet = {
+    theme = "simple"
+  },
 
   ai = {
     telescope = { style = "bordered" }
