@@ -6,6 +6,7 @@
 # mask built-ins with better defaults
 alias vi=vim
 alias vim="nvim"
+alias helix="hx"
 
 # more ways to ls
 alias ll='ls -lh'
