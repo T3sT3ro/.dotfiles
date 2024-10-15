@@ -1,1 +1,15 @@
-theme = "jetbrains_dark"
+theme = "jetbrains_dark+"
+
+[editor]
+shell = ["bash", "-c"]
+rulers = [80, 120]
+bufferline = "multiple"
+cursorline = true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.lsp]
+display-inlay-hints = true

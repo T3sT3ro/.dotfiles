@@ -1,0 +1,20 @@
+inherits = "jetbrains_dark"
+
+#"ui.cursor" = { fg = "cursor_orange_bg", modifiers = ["reversed"] }
+"ui.cursor" = { fg = "black", bg = "orange" }
+
+# regular cursor selection
+"ui.cursor.insert" = { fg = "white", bg = "dark_gray" }
+# multi-cursor secondary selections
+"ui.cursor.select" = { fg = "black", bg = "blue" }
+# matching construct
+"ui.cursor.match" =  { fg = "black", bg = "yellow" }
+
+# makes bg transparent
+#"ui.background" = { fg = "foreground" }
+
+[palette]
+cursor_orange_bg = "#E08855"
+orange = "#FFA500"
+dark_gray = "#444444"
+coral = "#FF7F50"
