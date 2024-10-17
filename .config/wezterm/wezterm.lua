@@ -33,7 +33,7 @@ config.enable_scroll_bar = true
 config.scrollback_lines = 10000
 config.inactive_pane_hsb = {
   saturation = 0.9,
-  brightness = 0.9
+  brightness = 0.8
 }
 
 -- KEYMAP CONFIG
