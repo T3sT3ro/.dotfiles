@@ -21,6 +21,8 @@ fpath=(
 )
 
 autoload -Uz $fpath[1]/*(.:t)
+autoload -U select-word-style
+select-word-style bash
 
 # Source zstyles you might use with antidote.
 [[ -e ${ZDOTDIR:-~}/.zstyles ]] && source ${ZDOTDIR:-~}/.zstyles
