@@ -4,7 +4,7 @@ local options = {
   formatters_by_ft = {
     lua = { "stylua" },
     bash = { 'shfmt', 'shellcheck' },
-    zsh = { 'shfmt', 'shellcheck' },
+    zsh = { 'shellcheck' }, -- don't use shfmt as it doesn't support zsh officialy and breaks scripts
     sh = { 'shfmt', 'shellcheck' },
     ["*"] = { "codespell" },
   },
