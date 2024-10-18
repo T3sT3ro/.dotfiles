@@ -3,6 +3,9 @@ local options = {
 
   formatters_by_ft = {
     lua = { "stylua" },
+    bash = { 'shfmt', 'shellcheck' },
+    zsh = { 'shfmt', 'shellcheck' },
+    sh = { 'shfmt', 'shellcheck' },
     ["*"] = { "codespell" },
   },
 
