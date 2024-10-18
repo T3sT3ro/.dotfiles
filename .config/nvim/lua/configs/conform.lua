@@ -3,7 +3,11 @@ local options = {
 
   formatters_by_ft = {
     lua = { "stylua" },
+    ["*"] = { "codespell" },
   },
+
+  notify_on_error = true,
+  notify_no_formatters = true,
 }
 
 return options

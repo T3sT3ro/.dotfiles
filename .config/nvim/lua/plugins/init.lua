@@ -1,9 +1,9 @@
 return {
+
+  -- formatting plugin
   {
     "stevearc/conform.nvim",
-    config = function()
-      require "configs.conform"
-    end,
+    opts = require "configs.conform"
   },
 
   {
@@ -12,6 +12,7 @@ return {
       highligh = { enable = true },
       indent = { enable = true },
       ensure_installed = { "html", "css", "bash", "lua" },
+      -- like CTRL+W in IntelliJ
       incremental_selection = {
         enable = true,
         keymaps = {
@@ -22,6 +23,7 @@ return {
     },
   },
 
+  -- explorer
   {
     "nvim-tree/nvim-tree.lua",
     opts = {
@@ -31,13 +33,60 @@ return {
 
   {
     "neovim/nvim-lspconfig",
-    config = function()
-      require("nvchad.configs.lspconfig").defaults()
-      require "configs.lspconfig"
+    opts = require "configs.lspconfig",
+  },
+
+
+  -- cmp for completionList
+  {
+    "hrsh7th/nvim-cmp",
+
+    dependencies = {
+
+      {
+        "hrsh7th/cmp-cmdline",
+        event = "CmdlineEnter",
+        config = function()
+          local cmp = require "cmp"
+
+          cmp.setup.cmdline("/", {
+            mapping = vim.tbl_deep_extend("force", cmp.mapping.preset.cmdline(), {
+              ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+              ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+            }),
+            sources = { { name = "buffer" } },
+          })
+
+          cmp.setup.cmdline(":", {
+            mapping = vim.tbl_deep_extend("force", cmp.mapping.preset.cmdline(), {
+              ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+              ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+            }),
+            sources = cmp.config.sources(
+              { { name = "path" } },
+              { {
+                name = "cmdline",
+                option = { ignore_cmds = { "Man", "!" } },
+                trigger_characters = { ":" }
+              } }
+            ),
+            matching = { disallow_symbol_nonprefix_matching = false },
+          })
+        end,
+      },
+    },
+
+    opts = function(_, opts)
+      local cmp = require 'cmp'
+      print(opts)
+      opts.mapping['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+      opts.mapping['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+
+      table.insert(opts.sources, { name = "codeium" })
     end,
   },
 
-  -- multi-cursors - not yet configured
+  -- multi-cursors - barely configured
   -- https://github.com/mg979/vim-visual-multi
   {
     "mg979/vim-visual-multi",
@@ -67,7 +116,7 @@ return {
   {
     "debugloop/telescope-undo.nvim",
     dependencies = { -- note how they're inverted to above example
-      {
+      { 
         "nvim-telescope/telescope.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
       },
@@ -97,8 +146,17 @@ return {
 
   -- AI autocomplete plugin
   {
-    "Exafunction/codeium.vim",
-    event = "BufEnter",
+    "Exafunction/codeium.nvim",
+    lazy = false,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "hrsh7th/nvim-cmp",
+    },
+    config = function()
+      require("codeium").setup({
+        enable_chat = true,
+      })
+    end
   },
 
   {
@@ -124,17 +182,6 @@ return {
     end,
   },
 
-  {
-    "TobinPalmer/Tip.nvim",
-    event = "VimEnter",
-    init = function()
-      -- Default config
-      --- @type Tip.config
-      require("tip").setup({
-        seconds = 2,
-        title = "Tip!",
-        url = "https://vtip.43z.one", -- Or https://vimiscool.tech/neotip
-      })
-    end,
-  }
+  { "nvchad/volt" , lazy = true },
+  { "nvchad/menu" , lazy = true },
 }
