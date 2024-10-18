@@ -41,7 +41,7 @@ function refreshCompletion() {
   # in red
   # echo $(tput setaf 1)Refreshing $1 completions...$(tput sgr0)
   # if command doesn't exist
-  (($ + commands[$1])) || return 0
+  (($+commands[$1])) || return 0
 
   # if file does not exist
   if [ ! -f "$COMPLETIONS_DIR/_$1" ]; then
