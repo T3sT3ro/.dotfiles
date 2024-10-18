@@ -82,5 +82,25 @@ alias dotfiles="git --git-dir=~/.dotfiles --work-tree=~"
 # alias to manage dotfiles.
 alias lazydotfiles="lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 
+#
+# flatpaks
+# aliases generated and hand-picked with flatpak-print-aliases, see functions.zsh
+alias rnote="flatpak run com.github.flxzt.rnote"
+alias foliate="flatpak run com.github.johnfactotum.Foliate"
+alias heroic="flatpak run com.heroicgameslauncher.hgl"
+alias mpv="flatpak run io.mpv.Mpv"
+alias blockbench="flatpak run net.blockbench.Blockbench"
+alias audacity="flatpak run org.audacityteam.Audacity"
+alias blender="flatpak run org.blender.Blender"
+alias flameshot="flatpak run org.flameshot.Flameshot"
+alias gnome-builder="flatpak run org.gnome.Builder"
+alias video-trimmer="flatpak run org.gnome.gitlab.YaLTeR.VideoTrimmer"
+alias gnome-network-displays="flatpak run org.gnome.NetworkDisplays"
+alias godot="flatpak run org.godotengine.GodotSharp"
+alias musescore="flatpak run org.musescore.MuseScore"
+alias qpwgraph="flatpak run org.rncbc.qpwgraph"
+alias tor="flatpak run org.torproject.torbrowser-launcher"
+alias openfreebuds="flatpak run pw.mmk.OpenFreebuds"
+
 
 # alias man=better_man #'if (( $(tput cols) <= 130 )); then MANWIDTH=$( (( $(tput cols) <= 130 )) && echo $(tput cols) || echo 120) man'
