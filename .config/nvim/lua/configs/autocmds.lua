@@ -6,6 +6,7 @@ local gpgGroup = vim.api.nvim_create_augroup('customGpg', { clear = true })
 
 local autocmd = vim.api.nvim_create_autocmd
 
+--[[
 autocmd({ 'BufReadPre', 'FileReadPre' }, {
     pattern = '*.gpg',
     group = gpgGroup,
@@ -48,6 +49,8 @@ autocmd({ 'BufWritePost', 'FileWritePost' }, {
     group = gpgGroup,
     command = 'u'
 })
+
+--]]
 
 -- restore last cursor position, from https://nvchad.com/docs/recipes
 autocmd("BufReadPost", {
