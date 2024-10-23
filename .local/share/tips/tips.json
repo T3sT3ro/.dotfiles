@@ -34,6 +34,7 @@
   "bash `${param:-default}` substitutions if `param` is not set\n\n[more on bash substitutions](https://tldp.org/LDP/abs/html/parameter-substitution.html)",
   "bash has `${PIPESTATUS[]}` variable for inspecting errors in pipes",
   "bash logical operators syntax:\n`[[ cmd1 ]] && [[ ! cmd2 ]] || cmd3`",
+  "consider `mosh` as an alternative to `ssh` if you need secure connection while roaming with poor network connection!",
   "https://charm.sh is a TUI and tool swissknife — terminal components, interactive forms, inter-machine encrypted store and more",
   "in bash (rather readline) `CTRL+SHIFT+_` triggers undo",
   "in bash, you can redirect and pipe creatively, for example `for ... done | jq -s ...`",
