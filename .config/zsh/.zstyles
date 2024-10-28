@@ -15,6 +15,7 @@ zstyle ':antidote:bundle' use-friendly-names 'yes'
 #
 
 zstyle ':completion:*' menu select
+zstyle ':completion:*:descriptions' format '[%d]'
 
 zstyle -e ':autocomplete:list-choices:*' list-lines 'reply=( 10 )'
 
