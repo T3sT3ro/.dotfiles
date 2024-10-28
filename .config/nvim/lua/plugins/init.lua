@@ -154,6 +154,16 @@ return {
     config = function()
       require("codeium").setup({
         enable_chat = true,
+        virtual_text = {
+          enabled = true,
+          default_filetype_enabled = true,
+          key_bindings = {
+            accept = "<F13>",
+            accept_word = "<C-F13>",
+            accept_line = "<M-C-F13>",
+            clear = "<M-F13>",
+          }
+        }
       })
     end
   },
