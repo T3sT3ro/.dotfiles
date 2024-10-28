@@ -11,6 +11,9 @@ zsh-users/zsh-completions path:src kind:fpath
 # doesn't have to.
 mattmc3/ez-compinit
 
+# fzf based tab completions
+Aloxaf/fzf-tab
+
 # There are also other plugins that handle completions if you prefer something else.
 # However, ez-compinit is highly recommended, and was built by the author of antidote.
 #
