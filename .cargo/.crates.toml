@@ -17,6 +17,7 @@
 "nu 0.98.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["nu"]
 "ripgrep 14.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["rg"]
 "sd 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["sd"]
+"smartcat 2.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["sc"]
 "xsv 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["xsv"]
 "zellij 0.40.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["zellij"]
 "zoxide 0.9.6 (registry+https://github.com/rust-lang/crates.io-index)" = ["zoxide"]
