@@ -5,6 +5,18 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+
+# XDG
+export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+export XDG_CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
+export XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
+export XDG_STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
+export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-$HOME/.xdg}
+export XDG_PROJECTS_DIR=${XDG_PROJECTS_DIR:-$HOME/workspace/ttr}
+
+# ZSH config
+export BASHDOTDIR=${BASHDOTDIR:-$XDG_CONFIG_HOME/bash}
+
 export GPG_TTY=$(tty)
 
 # escape sequences input (for example for colors): <CTRL>+V, <CTRL>+[, [, [code]
@@ -16,15 +28,15 @@ export GPG_TTY=$(tty)
 # =============================================
 # aliases and utilities
 
-. ~/.bashrc.d/remote.sh
-. ~/.bashrc.d/dotfiles.sh
-. ~/.bashrc.d/aliases.sh
-. ~/.bashrc.d/tmux.sh
-. ~/.bashrc.d/todo.sh
-# . ~/.bashrc.d/conda.sh
-. ~/.bashrc.d/ferium.sh
-. ~/.bashrc.d/banner.sh
-. ~/.bashrc.d/prompt.sh
+. "$BASHDOTDIR/remote.sh"
+. "$BASHDOTDIR/dotfiles.sh"
+. "$BASHDOTDIR/aliases.sh"
+. "$BASHDOTDIR/tmux.sh"
+. "$BASHDOTDIR/todo.sh"
+# . $BASHDOTDIR/conda.sh
+. "$BASHDOTDIR/ferium.sh"
+. "$BASHDOTDIR/banner.sh"
+. "$BASHDOTDIR/prompt.sh"
 
 # Add an "alert" alias for long running commands.  Use like so:
 # don't put duplicate lines or lines starting with space in the history.
