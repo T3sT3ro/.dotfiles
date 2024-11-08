@@ -91,7 +91,7 @@ eval "$(starship init zsh)"
 # Generated for envman. Do not edit.
 [[ -s "$HOME/.config/envman/load.sh" ]] && . "$HOME/.config/envman/load.sh"
 
-. "$HOME/.deno/env"
+[[ -s "$HOME/.deno/env" ]] && . "$HOME/.deno/env"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
