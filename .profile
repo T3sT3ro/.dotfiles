@@ -37,7 +37,7 @@ fi
 
 
 # Added by Toolbox App
-export PATH="$PATH:/home/tooster/.local/share/JetBrains/Toolbox/scripts"
+export PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts"
 
 # deno
-. "/home/tooster/.deno/env"
+. "$HOME/.deno/env"
