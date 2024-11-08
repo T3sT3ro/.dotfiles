@@ -15,7 +15,7 @@ echo "Making sure core utilities are installed"
 sudo apt install -y curl wget git
 
 echo "cloning dotfiles with shallow submodules"
-git clone --recurse-submodules --shallow-submodules git@github.com:T3sT3ro/.dotfiles.git ~/.dotfiles
+git clone --recurse-submodules --shallow-submodules https://github.com/T3sT3ro/.dotfiles.git ~/.dotfiles
 
 echo "aliasing dotfiles temporarily"
 alias dotfiles="/usr/bin/git --git-dir=~/.dotfiles/ --work-tree=~"
