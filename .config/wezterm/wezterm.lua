@@ -2,7 +2,7 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 local act = wezterm.action
 
-config.color_scheme = "Catppuccin Mocha"
+config.color_scheme = "Catppuccin Mocha (Gogh)"
 config.window_padding = {
   left = 0,
   right = 0,
