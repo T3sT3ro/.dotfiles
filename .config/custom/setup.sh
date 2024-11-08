@@ -6,8 +6,6 @@
 # dotfiles and packages
 ################################################
 
-set -e
-
 function step() {
   echo -e "\033[1;34m$1\033[0m"
 }
@@ -33,8 +31,8 @@ done
 
 step "setting up local dotfiles config"
 dotfiles config --local status.showUntrackedFiles no
-step "trying to checkout dotfiles"
 
+step "trying to checkout dotfiles"
 dotfiles checkout
 
 
