@@ -11,7 +11,7 @@ config.window_padding = {
 }
 
 config.initial_cols = 140
-config.initial_rows = 36 
+config.initial_rows = 36
 
 config.window_frame = {
   border_left_width = '1px',
@@ -42,13 +42,15 @@ config.leader = { key = '\\', mods = 'CTRL', timeout_milliseconds = 1000 }
 
 config.keys = {
   -- send C-a on double C-a
-  { key = '\\', mods = 'LEADER|CTRL',
+  {
+    key = '\\',
+    mods = 'LEADER|CTRL',
     action = act.SendKey { key = '\\', mods = 'CTRL' }
   },
 
-  { key = 'h', mods = 'LEADER', action = act.SplitHorizontal },
-  { key = 'v', mods = 'LEADER', action = act.SplitVertical },
-  { key = 'q', mods = 'LEADER', action = act.CloseCurrentPane { confirm = true }},
+  { key = 'h', mods = 'LEADER',     action = act.SplitVertical },
+  { key = 'v', mods = 'LEADER',     action = act.SplitHorizontal },
+  { key = 'q', mods = 'LEADER',     action = act.CloseCurrentPane { confirm = true } },
 
   -- increase/decrease font size only with leader and  CTRL + + and CTRL + -
   { key = '+', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
