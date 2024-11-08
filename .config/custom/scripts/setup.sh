@@ -12,7 +12,7 @@ echo "Entering home directory for safety"
 cd ~ || exit
 
 echo "Making sure core utilities are installed"
-sudo apt install -y curl, wget, git
+sudo apt install -y curl wget git
 
 echo "cloning dotfiles with shallow submodules"
 git clone --recurse-submodules --shallow-submodules git@github.com:T3sT3ro/.dotfiles.git ~/.dotfiles
