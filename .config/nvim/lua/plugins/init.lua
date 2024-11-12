@@ -51,16 +51,16 @@ return {
 
           cmp.setup.cmdline("/", {
             mapping = vim.tbl_deep_extend("force", cmp.mapping.preset.cmdline(), {
-              ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-              ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+              ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+              ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
             }),
             sources = { { name = "buffer" } },
           })
 
           cmp.setup.cmdline(":", {
             mapping = vim.tbl_deep_extend("force", cmp.mapping.preset.cmdline(), {
-              ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-              ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+              ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+              ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
             }),
             sources = cmp.config.sources(
               { { name = "path" } },
@@ -78,10 +78,11 @@ return {
 
     opts = function(_, opts)
       local cmp = require 'cmp'
-      opts.mapping['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-      opts.mapping['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+      opts.mapping['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select })
+      opts.mapping['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select })
 
       table.insert(opts.sources, { name = "codeium" })
+      table.insert(opts.sources, { name = "nvim_lsp_signature_help" })
     end,
   },
 
