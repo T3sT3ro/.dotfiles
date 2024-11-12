@@ -1,6 +1,7 @@
 require "nvchad.mappings"
 
 local map = vim.keymap.set
+local nomap = vim.keymap.del
 
 map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
 
@@ -19,3 +20,8 @@ map("i", "<C-Z>", "<c-o>u", { desc = "undo" })
 map('n', '<C-s>', ':w<CR>', { noremap = true, silent = true })
 map('i', '<C-s>', '<C-o>:w<CR>', { noremap = true, silent = true })
 
+-- nvim-tree config
+map('n', '<A-1>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+nomap('n', '<C-n>') -- disable C-n to toggle nvim-tree
+
+-- map('n', '<A-1>', ':NvimTreeFocus<CR>', { noremap = true, silent = true })
