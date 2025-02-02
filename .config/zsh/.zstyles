@@ -24,3 +24,5 @@ zstyle ':autocomplete:history-search-backward:*' list-lines $SAVEHIST
 
 # to fix fzf vs zsh-autocomplete in `kill` problem
 zstyle ':autocomplete:tab:*' completion fzf
+
+zstyle ':edit:*' word-chars '~*?'

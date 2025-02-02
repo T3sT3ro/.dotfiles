@@ -21,8 +21,8 @@ fpath=(
 )
 
 autoload -Uz $fpath[1]/*(.:t)
-autoload -U select-word-style
-select-word-style bash
+#autoload -Uz select-word-style
+#select-word-style bash  # Best for shell-like word behavior
 
 # Source zstyles you might use with antidote.
 [[ -e ${ZDOTDIR:-~}/.zstyles ]] && source ${ZDOTDIR:-~}/.zstyles
@@ -84,6 +84,17 @@ eval "$(starship init zsh)"
 
 # Enable vim mode with ESC - for now disabled, because it doesn't play nicely with ALT+.
 # bindkey -v
+
+# Move by subwords (like Ctrl + Arrow in editors)
+bindkey '^[[1;5D' backward-subword  # Ctrl + ← (move to previous subword)
+bindkey '^[[1;5C' forward-subword   # Ctrl + → (move to next subword)
+
+# Move by shell words (like Alt + Arrow for shell words)
+bindkey '^[D' backward-shell-word  # Alt + ← (move to previous shell word)
+bindkey '^[C' forward-shell-word   # Alt + → (move to next shell word
+
+
+# -----------------------------------------
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && . "$HOME/.sdkman/bin/sdkman-init.sh"
