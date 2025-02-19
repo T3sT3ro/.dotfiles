@@ -19,5 +19,7 @@
 "sd 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["sd"]
 "smartcat 2.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["sc"]
 "xsv 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)" = ["xsv"]
+"yazi-cli 25.2.11 (registry+https://github.com/rust-lang/crates.io-index)" = ["ya"]
+"yazi-fm 25.2.11 (registry+https://github.com/rust-lang/crates.io-index)" = ["yazi"]
 "zellij 0.41.1 (registry+https://github.com/rust-lang/crates.io-index)" = ["zellij"]
 "zoxide 0.9.6 (registry+https://github.com/rust-lang/crates.io-index)" = ["zoxide"]
