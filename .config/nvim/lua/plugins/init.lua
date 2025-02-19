@@ -8,16 +8,42 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate", -- after update of tresitter, ensure languages in ensure_installed are updated as well
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+    },
+
     opts = {
       highligh = { enable = true },
       indent = { enable = true },
-      ensure_installed = { "html", "css", "bash", "lua" },
+      ensure_installed = {
+        "json",
+        "javascript",
+        "typescript",
+        "tsx",
+        "yaml",
+        "html",
+        "css",
+        "prisma",
+        "markdown",
+        "markdown_inline",
+        "svelte",
+        "graphql",
+        "bash",
+        "lua",
+        "vim",
+        "dockerfile",
+        "gitignore",
+        "query",
+      },
       -- like CTRL+W in IntelliJ
       incremental_selection = {
         enable = true,
         keymaps = {
           node_incremental = "v",
           node_decremental = "V",
+          scope_incremental = false,
         },
       }
     },
@@ -52,7 +78,7 @@ return {
       },
       {
         -- Open in the current working directory
-        "<leader>Y",
+        "<leader>cw",
         "<cmd>Yazi cwd<cr>",
         desc = "Open the file manager in nvim's working directory",
       },
