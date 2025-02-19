@@ -55,6 +55,10 @@ config.keys = {
   -- increase/decrease font size only with leader and  CTRL + + and CTRL + -
   { key = '+', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
   { key = '_', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+
+  -- C+S+PageUp/Down go to next/prev prompt
+  { key = 'PageUp',    mods = 'SHIFT|CTRL', action = act.ScrollToPrompt(-1) },
+  { key = 'PageDown',  mods = 'SHIFT|CTRL', action = act.ScrollToPrompt(1) },
 }
 
 return config
