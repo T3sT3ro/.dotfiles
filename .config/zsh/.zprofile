@@ -40,4 +40,5 @@ path=(
   $N_PREFIX/bin(N)
   $HOME/.cargo/bin(N)
   $path
+  $HOME/AppImages
 )
